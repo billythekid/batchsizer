@@ -24,6 +24,7 @@ class ResizeController extends Controller
         $dimensions = explode(',', $request->input('dimensions'));
         $files = $request->files->all()['picture'];
 
+        $files = array_slice($files, 0, 5);
         $totalFiles = count($files);
         $totalDimensions = count($dimensions);
         $totalDimensions = $totalDimensions > 0 ? $totalDimensions : 1;

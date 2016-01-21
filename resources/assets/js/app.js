@@ -1,24 +1,25 @@
-var myDropzone = new Dropzone("#filezone", {
-    dictDefaultMessage: "Drop images here, max 20 at a time.",
+Dropzone.autoDiscover = false;
+
+$('#filezone').dropzone({
+    dictDefaultMessage: "Drop images here, max 5 at a time.",
     paramName: "picture",
     maxFilesize: 5,
     uploadMultiple: true,
-    maxFiles: 20,
-    parallelUploads: 20,
+    maxFiles: 5,
+    parallelUploads: 5,
     addRemoveLinks: true,
     acceptedFiles: 'image/*',
     init: function () {
         this.on("successmultiple", function (file, response) {
             window.location = response.url;
-            setTimeout(function () {
-                myDropzone.removeAllFiles();
-            }, 2000);
+            this.removeAllFiles()
         });
         this.on("drop", function (file) {
             document.getElementsByClassName("progress")[0].classList.remove('hidden');
         });
     }
 });
+
 function showFeedbackForm() {
     swal({
         title: "Feedback",

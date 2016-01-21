@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
     <div class="content">
-        <div class="title">BatchSizer</div>
-        <form action="{{ route('batchsizer') }}" id="filezone" class="btkzone">
+        <!--<div class="title">{{ config('app.name') }}</div>-->
+        <form action="{{ route('batchsizer') }}" id="filezone" class="dropzone btkzone">
             {!! csrf_field() !!}
             <input type="hidden" name="channel" value="{{ $channel }}">
             <div class="form-group">
@@ -55,7 +55,7 @@
                     </li>
                 </ul>
             </li>
-            <li>Drag all the images (5MB max per image) you want to be resized into the big box. (Or click in
+            <li>Drag all the images (5MB max per image, 5 images max) you want to be resized into the big box. (Or click in
                 the box and select your images in the browser)
             </li>
             <li>Wait for all your images to upload. Once the upload is complete you will receive a .zip file
