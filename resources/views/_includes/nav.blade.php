@@ -1,13 +1,12 @@
-<nav class="navbar navbar-default">
+<nav class="navbar bg-info panel-info">
     <div class="container">
         <div class="navbar-header">
 
-            <button type="button" class="navbar-default navbar-toggle collapsed" data-toggle="collapse"
+            <button type="button" class="active text-danger btn btn-info navbar-btn navbar-toggle collapsed "
+                    data-toggle="collapse"
                     data-target="#app-navbar-collapse">
                 <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                <span class="fa fa-bars"></span>
             </button>
 
             <!-- Branding Image -->
@@ -24,28 +23,30 @@
              </ul>
             --}}
 
-            <div class="nav navbar-nav navbar-right">
-                @if (Auth::guest())
-                    @if (app()->environment('local'))
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
-                    @endif
-                @else
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false">
-                            {{ Auth::user()->name }} <span class="caret"></span>
-                        </a>
+            <ul class="nav navbar-nav navbar-right">
 
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                        </ul>
+                    @if (Auth::guest())
+                        @if (app()->environment('local'))
+                            <li><a href="{{ url('/login') }}">Login</a></li>
+                            <li><a href="{{ url('/register') }}">Register</a></li>
+                        @endif
+                    @else
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false">
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                            </ul>
+                        </li>
+                    @endif
+                    <li>
+                        <button class="btn btn-info navbar-btn" onclick="showFeedbackForm()">Feedback</button>
                     </li>
-                @endif
-                <li>
-                    <button class="btn btn-info navbar-btn" onclick="showFeedbackForm()">Feedback</button>
-                </li>
-            </div>
+
+            </ul>
         </div>
     </div>
 </nav>
