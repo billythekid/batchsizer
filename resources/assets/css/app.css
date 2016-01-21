@@ -1,0 +1,59 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(-15deg,rgba(179, 219, 246, 0.3),rgba(203, 235, 255, 0.5) 30%,#f7fafc) fixed;
+    /*background: linear-gradient(5deg, #f7fafc 0%, #f3f9fd 10%, #cbebff 44%, #b3dbf6 100%);*/
+    padding-top: 1em;
+}
+
+.content {
+    text-align: center;
+}
+
+.title {
+    font-size: 3em;
+}
+
+#responsive-label {
+    font-size: 0.75em;
+}
+
+.progress {
+    background-color: transparent;
+    border-radius: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    /* height: 3em;*/
+}
+
+.btkzone {
+    border-radius: 1em;
+}
+
+.feedback-tab {
+    border-radius: 0 0 1em 1em;
+    top: 10em;
+    position: absolute;
+    left: 0;
+    width: auto;
+    transform: rotate(-90deg);
+    transform-origin: left top;
+}
+
+span.price {
+    position: absolute;
+    right: 0em;
+    top: -2em;
+    border-radius: 50%;
+    width: 6em;
+    height: 6em;
+    text-align: center;
+    padding-top: 2em;
+    line-height: 2em;
+    z-index: 1;
+}
