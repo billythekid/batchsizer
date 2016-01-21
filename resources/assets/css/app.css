@@ -3,9 +3,7 @@ html, body {
 }
 
 body {
-    background: linear-gradient(-15deg,rgba(179, 219, 246, 0.3),rgba(203, 235, 255, 0.5) 30%,#f7fafc) fixed;
-    /*background: linear-gradient(5deg, #f7fafc 0%, #f3f9fd 10%, #cbebff 44%, #b3dbf6 100%);*/
-    padding-top: 1em;
+    background: linear-gradient(-15deg, rgba(179, 219, 246, 0.3), rgba(203, 235, 255, 0.5) 30%, #f7fafc) fixed;
 }
 
 .content {
@@ -35,16 +33,6 @@ body {
     border-radius: 1em;
 }
 
-.feedback-tab {
-    border-radius: 0 0 1em 1em;
-    top: 10em;
-    position: absolute;
-    left: 0;
-    width: auto;
-    transform: rotate(-90deg);
-    transform-origin: left top;
-}
-
 span.price {
     position: absolute;
     right: 0em;
@@ -56,4 +44,8 @@ span.price {
     padding-top: 2em;
     line-height: 2em;
     z-index: 1;
+}
+
+.navbar {
+    padding-top: 1em;
 }

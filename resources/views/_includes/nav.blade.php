@@ -1,10 +1,7 @@
-@if(App::environment('local'))
-
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
 
-                <!-- Collapsed Hamburger -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#app-navbar-collapse">
                     <span class="sr-only">Toggle Navigation</span>
@@ -15,20 +12,21 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                    {{ config('app.name') }}
                 </a>
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
-                </ul>
+                {{--
 
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    @if (Auth::guest())
+                 <ul class="nav navbar-nav">
+                     <li><a href="{{ url('/home') }}">Home</a></li>
+                 </ul>
+                --}}
+
+                <div class="nav navbar-nav navbar-right">
+                    @if (Auth::guest() && App::environment('local'))
+
                         <li><a href="{{ url('/login') }}">Login</a></li>
                         <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
@@ -43,8 +41,10 @@
                             </ul>
                         </li>
                     @endif
-                </ul>
+                    <li>
+                        <a href="#" onclick="showFeedbackForm()">Feedback</a>
+                    </li>
+                </div>
             </div>
         </div>
     </nav>
-@endif

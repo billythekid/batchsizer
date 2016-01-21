@@ -16,31 +16,38 @@ use Illuminate\Support\Facades\Mail;
 
 Route::group(['middleware' => ['web']], function ()
 {
-    Route::auth();
-
-    Route::get('/home', 'HomeController@index');
+    if (App::environment('local'))
+    {
+        Route::auth();
+        Route::get('/home', 'HomeController@index');
+        Route::get('about', function ()
+        {
+            return view()->make('about');
+        })->name('about');
+    }
     Route::get('/', function ()
     {
         $channel = md5(str_random() . time());
 
-        return view('index',compact('channel'));
+        return view('index', compact('channel'));
     });
     Route::post('batchsizer', 'ResizeController@resize')->name('batchsizer');
 
     Route::get('batches/{batch}', 'ResizeController@serveBatch');
 
-    Route::post('feedback', function(){
+    Route::post('feedback', function ()
+    {
         $feedback = request()->get('feedback');
-        Mail::send('emails.feedback', compact('feedback'), function ($message) {
+        Mail::send('emails.feedback', compact('feedback'), function ($message)
+        {
             $message->subject('New feedback from BatchSizer');
             $message->from('noreply@batchsizer.co.uk', 'BatchSizer');
             $message->to('billy@the-kid.org');
         });
         alert()->success('Thank You', "Your feedback was sent.");
+
         return redirect()->back();
     })->name('feedback');
 
-    Route::get('about', function(){
-        return view()->make('about');
-    })->name('about');
+
 });

@@ -10,8 +10,3 @@
         </div>
     </form>
 </div>
-<div class="container">
-    <div class="form-group">
-        <button class="feedback-tab btn btn-primary form-control" onclick="showFeedbackForm()">Feedback</button>
-    </div>
-</div>
