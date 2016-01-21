@@ -2,7 +2,7 @@
     <div class="container">
         <div class="navbar-header">
 
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+            <button type="button" class="navbar-default navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#app-navbar-collapse">
                 <span class="sr-only">Toggle Navigation</span>
                 <span class="icon-bar"></span>
@@ -43,7 +43,7 @@
                     </li>
                 @endif
                 <li>
-                    <a href="#" onclick="showFeedbackForm()">Feedback</a>
+                    <button class="btn btn-info navbar-btn" onclick="showFeedbackForm()">Feedback</button>
                 </li>
             </div>
         </div>
