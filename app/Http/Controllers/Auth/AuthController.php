@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -10,6 +12,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
 {
+
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -28,7 +31,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new authentication controller instance.
@@ -43,29 +46,67 @@ class AuthController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
+            'stripeToken' => 'required',
+            'name'        => 'required|max:255',
+            'email'       => 'required|email|max:255|unique:users',
+            'password'    => 'required|confirmed|min:6',
+        ], ['stripeToken.required' => 'There was a problem with your credit card details']);
+    }
+
+    public function register(Request $request, $plan)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails())
+        {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+
+        Auth::guard($this->getGuard())->login($this->create($request->all()));
+
+        $user = Auth::user();
+
+        $token = $request->input('stripeToken');
+
+        if ($plan == 'project')
+        {
+            $user->createAsStripeCustomer($token);
+            $user->charge('500', ['description' => 'Project Account Purchase']);
+        }
+
+        if ($plan == 'freelancer')
+        {
+            $user->newSubscription('freelancer', 'batchsizer-freelancer')->create($token);
+        }
+
+        if ($plan == 'agency')
+        {
+            $user->newSubscription('agency', 'batchsizer-agency')->create($token);
+        }
+
+        return redirect($this->redirectPath());
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'name'     => $data['name'],
+            'email'    => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
     }

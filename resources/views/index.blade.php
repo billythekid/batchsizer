@@ -55,12 +55,20 @@
                     </li>
                 </ul>
             </li>
-            <li>Drag all the images (5MB max per image, 5 images max) you want to be resized into the big box. (Or click in
+            <li>Drag all the images (5MB max per image, 5 images max) you want to be resized into the big box. (Or click
+                in
                 the box and select your images in the browser)
             </li>
             <li>Wait for all your images to upload. Once the upload is complete you will receive a .zip file
                 containing all your resized images.
             </li>
         </ol>
+        <p>For more information, please read <a href="{{route('about')}}">our about page</a>.</p>
+    </div>
+
+    <hr>
+
+    <div class="plans">
+        @include('_includes.plans')
     </div>
 @endsection

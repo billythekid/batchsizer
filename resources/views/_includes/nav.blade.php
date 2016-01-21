@@ -28,7 +28,6 @@
                     @if (Auth::guest())
                         @if (app()->environment('local'))
                             <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
                         @endif
                     @else
                         <li class="dropdown">

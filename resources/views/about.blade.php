@@ -33,10 +33,9 @@
             the filesystem, indeed the new resized images go straight from RAM into the zip. The zip file created is
             only on our server until you finish downloading it. If for some reason you didn't download your zip file we
             have an automated process that removes these zips twice a day.</p>
-        <p>Paid accounts have the option to retain their zip files and uploaded original images.</p>
+        <p>Paid accounts <strong>have the option</strong> to retain their uploaded images and zip files.</p>
 
         <p class="question">How much does it cost?</p>
-        <p>Resizing images subject to any current limits on the homepage is <strong>free of charge forever</strong>.</p>
         <p>Paid user accounts allow additional functionality to customers.</p>
         <p>We currently have 3 tiers for paid accounts.</p>
         @include('_includes.plans')

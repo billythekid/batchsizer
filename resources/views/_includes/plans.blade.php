@@ -1,24 +1,34 @@
+<p>Resizing images subject to any current limits on the homepage is <strong>free of charge forever</strong>.</p>
+
 <div class="row">
     <hr>
     <div class="col-md-4">
-        <div class="panel panel-warning">
+        <div class="panel panel-danger">
             <div class="panel-heading">Project Access <span
-                        class="price btn-warning"><strong>$5</strong>/project</span></div>
+                        class="price btn-danger"><strong>$5</strong>/project</span></div>
             <div class="panel-body">
+                <p>No re-billing, just a one-off fee</p>
                 <p>One Project</p>
                 <ul>
-                    <li>Save uploads</li>
+                    <li>Save uploads (1GB secure storage included)</li>
                     <li>Rename and save your zip files for downloading later</li>
                     <li>Image hotlinking to your resized images</li>
                 </ul>
+                <p>More image options</p>
+                <ul>
+                    <li>Adjust the quality of your images</li>
+                    <li>Get black &amp; white images</li>
+                </ul>
+                <hr>
+                <a href="{{ route('signup','project') }}" class="btn btn-block btn-primary">Get Project Access</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="panel panel-success">
+        <div class="panel panel-warning">
             <div class="panel-heading">Freelancer Account <span
-                        class="price btn-success"><strong>$10</strong>/month</span></div>
+                        class="price btn-warning"><strong>$10</strong>/month</span></div>
             <div class="panel-body">
                 <p>Five Projects</p>
                 <ul>
@@ -26,17 +36,25 @@
                     <li>Rename and save your zip files for downloading later</li>
                     <li>Image hotlinking to your resized images</li>
                 </ul>
+                <p>More image options</p>
+                <ul>
+                    <li>Adjust the quality of your images</li>
+                    <li>Get black &amp; white images</li>
+                </ul>
                 <p>Email Resizing</p>
                 <ul>
                     <li>Send your images in an email and we'll email your zip right back!</li>
                 </ul>
+                <hr>
+                <a href="{{ route('signup','freelancer') }}" class="btn btn-block btn-primary">Get Freelancer Account</a>
+
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="panel panel-info">
-            <div class="panel-heading">Agency Account <span class="price btn-primary"><strong>$25</strong>/month</span>
+        <div class="panel panel-success">
+            <div class="panel-heading">Agency Account <span class="price btn-success"><strong>$25</strong>/month</span>
             </div>
             <div class="panel-body">
                 <p>Unlimited Projects</p>
@@ -44,6 +62,11 @@
                     <li>Save uploads on a per-project basis</li>
                     <li>Rename and save your zip files for downloading later</li>
                     <li>Image hotlinking to your resized images</li>
+                </ul>
+                <p>More image options</p>
+                <ul>
+                    <li>Adjust the quality of your images</li>
+                    <li>Get black &amp; white images</li>
                 </ul>
                 <p>Email Resizing</p>
                 <ul>
@@ -54,7 +77,8 @@
                     <li>Invite team members</li>
                     <li>Assign projects to teams</li>
                 </ul>
-
+                <hr>
+                    <a href="{{ route('signup','agency') }}" class="btn btn-block btn-primary">Get Agency Account</a>
             </div>
         </div>
     </div>

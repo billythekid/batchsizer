@@ -162,6 +162,7 @@ return [
         Chumper\Zipper\ZipperServiceProvider::class,
         GeneaLabs\LaravelCaffeine\LaravelCaffeineServiceProvider::class,
         Infinety\SweetAlert\AlertServiceProvider::class,
+        Laravel\Cashier\CashierServiceProvider::class,
     ],
 
     /*

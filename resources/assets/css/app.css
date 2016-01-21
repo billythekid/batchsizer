@@ -48,5 +48,8 @@ span.price {
 
 .navbar .navbar-nav a:hover {
     background-color: #c8dce6;
+}
 
+.stripe-button-el {
+    display: none !important;
 }
