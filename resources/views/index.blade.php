@@ -11,9 +11,12 @@
                            value="{{ old('dimensions') }}"
                            placeholder="Widths[x Heights] e.g 200, 1024, 200x300, 800, 400x500">
                 </div>
-                <div class="col-xs-4 checkbox checkbox-info">
+                <div class="col-xs-3 col-sm-offset-1 checkbox checkbox-info">
                     <input class="styled" type="checkbox" name="responsive" id="responsive" checked>
-                    <label id="responsive-label" for="responsive">Responsive?</label>
+                    <label id="responsive-label" for="responsive">Responsive?</label><br>
+                    <input class="styled" type="checkbox" name="noupscale" id="noupscale" checked>
+                    <label id="noupscale-label" for="noupscale">Prevent upscaling?</label>
+
                 </div>
 
                 <div class="clearfix"></div>
@@ -53,9 +56,10 @@
                             constrain aspect ratios to prevent squishing but will best-fit-crop to those dimensions
                         </small>
                     </li>
+                    <li>If you want images smaller than the dimensions you put in to be scaled up, deselect the upscale checkbox.</li>
                 </ul>
             </li>
-            <li>Drag all the images (5MB max per image, 5 images max) you want to be resized into the big box. (Or click
+            <li>Drag all the images (10MB max per image, 10 images max) you want to be resized into the big box. (Or click
                 in
                 the box and select your images in the browser)
             </li>
