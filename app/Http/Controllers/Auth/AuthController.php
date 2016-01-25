@@ -80,7 +80,11 @@ class AuthController extends Controller
         if ($plan == 'project')
         {
             $user->createAsStripeCustomer($token);
-            $user->charge('500', ['description' => 'Project Account Purchase']);
+            if (! $user->charge('500', ['description' => 'Project Account Purchase']))
+            {
+                $user->active = false;
+                $user->save();
+            };
         }
 
         if ($plan == 'freelancer')

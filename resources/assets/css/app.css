@@ -37,6 +37,14 @@ body {
     border-radius: 1em;
 }
 
+.coming-soon .panel {
+    background-image: url(/images/comingsoon.png);
+    opacity: .5;
+    background-size: contain;
+    background-position-y: center;
+    background-repeat-y: no-repeat;
+}
+
 span.price {
     position: absolute;
     right: 0em;

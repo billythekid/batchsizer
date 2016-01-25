@@ -24,6 +24,22 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'stripe_id'
     ];
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class);
+    }
+
+    public function plan()
+    {
+        if ( $this->subscriptions()->count() == 0 )
+        {
+            return 'project';
+        }
+        return $this->subscriptions()->first()->name;
+    }
+
+
 }

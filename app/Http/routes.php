@@ -42,6 +42,10 @@ Route::group(['middleware' => ['web']], function ()
 
         Route::get('signup/{plan}', 'SignupController@showPlan')->middleware('guest')->name('signup');
 
+        Route::group(['middleware' => ['auth']], function ()
+        {
+            Route::resource('project','ProjectController');
+        });
 
         Route::post(
             'stripe/webhook',
@@ -55,7 +59,7 @@ Route::group(['middleware' => ['web']], function ()
         $channel = md5(str_random() . time());
 
         return view('index', compact('channel'));
-    });
+    })->middleware('guest');
     Route::post('batchsizer', 'ResizeController@resize')->name('batchsizer');
 
     Route::get('batches/{batch}', 'ResizeController@serveBatch');
