@@ -24,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = request()->user();
+        return view('home', compact('user'));
     }
 }

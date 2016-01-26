@@ -34,6 +34,7 @@ Route::group(['middleware' => ['web']], function ()
         Route::post('password/reset', 'Auth\PasswordController@reset');
 
 
+
         Route::get('/home', 'HomeController@index');
         Route::get('about', function ()
         {

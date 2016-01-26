@@ -18,6 +18,8 @@ class CreateProjectsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('name');
+            $table->boolean('save_uploads');
+            $table->boolean('save_resized_zips');
 
 
             $table->foreign('user_id')

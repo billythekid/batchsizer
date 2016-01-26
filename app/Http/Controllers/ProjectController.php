@@ -41,7 +41,13 @@ class ProjectController extends Controller
     {
         if ($request->user()->plan() == 'project' && $request->user()->projects()->count() > 0)
         {
-            alert()->error('Failed', 'You already have a project, to add more consider upgrading your account.');
+            alert()->error('Maxed Out!', 'You already have a project, to add more consider upgrading your account.');
+
+            return redirect()->back();
+        }
+        if ($request->user()->plan() == 'freelancer' && $request->user()->projects()->count() > 4)
+        {
+            alert()->error('Maxed Out!', 'Freelancer accounts are limited to 5 projects. To add more consider upgrading your account.');
 
             return redirect()->back();
         }
@@ -49,8 +55,9 @@ class ProjectController extends Controller
             'name'    => $request->get('name'),
             'user_id' => $request->user()->id,
         ]);
+        // we own the project but it won't appear in our projects list unless we add ourselves to it too.
         $request->user()->projects()->save($project);
-        alert()->success('Success', "Project {$request->name} successfully created");
+        alert()->success('Success', "{$request->name} successfully created");
 
         return redirect()->back();
     }
@@ -90,9 +97,11 @@ class ProjectController extends Controller
     {
         $this->authorize($project);
 
+        $project->save_uploads = ($request->has('save_uploads'));
+        $project->save_resized_zips = ($request->has('save_resized_zips'));
         if ($project->update($request->all()))
         {
-            alert()->success('Success', "Project {$project->name} updated!");
+            alert()->success('Success', "{$project->name} updated!");
         } else
         {
             alert()->error('Error', "Could not update {$project->name}");
