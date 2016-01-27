@@ -20,14 +20,6 @@
                 </div>
 
                 <div class="clearfix"></div>
-                <div class="progress">
-                    <div id="progress-bar" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="0"
-                         aria-valuemin="0"
-                         aria-valuemax="100"
-                         style="min-width: 2em; width: 2%;">
-                        0%
-                    </div>
-                </div>
             </div>
 
         </form>
@@ -75,4 +67,6 @@
     <div class="plans">
         @include('_includes.plans')
     </div>
+
+    @include('_includes.progress')
 @endsection

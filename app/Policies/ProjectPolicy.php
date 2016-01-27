@@ -28,7 +28,7 @@ class ProjectPolicy
      */
     public function show(User $user, Project $project)
     {
-        return ($project->owner->id === $user->id || $project->members->contains($user));
+        return $project->members->contains($user);
     }
 
 
@@ -44,6 +44,29 @@ class ProjectPolicy
         return $project->owner->id === $user->id;
     }
 
+    /**
+     * A user must be part of the project to be able to resize on it.
+     *
+     * @param User    $user
+     * @param Project $project
+     * @return bool
+     */
+    public function resize(User $user, Project $project)
+    {
+        return $project->members->contains($user);
+    }
+
+    /**
+     * A user must be part of the project to get the files.
+     *
+     * @param User    $user
+     * @param Project $project
+     * @return mixed
+     */
+    public function getUploadedFile(User $user, Project $project)
+    {
+        return $project->members->contains($user);
+    }
 
 
 }

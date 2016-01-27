@@ -21,7 +21,6 @@ class CreateProjectsTable extends Migration
             $table->boolean('save_uploads');
             $table->boolean('save_resized_zips');
 
-
             $table->foreign('user_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade');

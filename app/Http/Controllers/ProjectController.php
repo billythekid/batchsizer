@@ -3,13 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Project;
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use Illuminate\Http\Request;
+use App\Jobs\SaveFileToFilesystem;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class ProjectController extends Controller
 {
+
+    public function __construct()
+    {
+
+    }
 
     /**
      * Display a listing of the resource.
@@ -71,8 +78,9 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         $this->authorize($project);
+        $channel = md5(str_random() . time());
 
-        return view()->make('projects.single', compact('project'));
+        return view()->make('projects.single', compact('project', 'channel'));
     }
 
     /**
@@ -120,5 +128,35 @@ class ProjectController extends Controller
     {
         $this->authorize($project);
         //
+    }
+
+    public function resize(Request $request, Project $project)
+    {
+        $this->authorize($project);
+        $files = $request->files->all()['file'];
+
+        if ($project->save_uploads){
+            $directory = 'projects/' . $project->id;
+            $this->saveFiles($directory, $files);
+        }
+
+
+        return response()->json(['status' => 'success']);
+    }
+
+    private function saveFiles($directory, $files)
+    {
+        foreach ($files as $file)
+        {
+            $filename = $file->getClientOriginalName();
+            $file->move('../storage/app/'.$directory,$filename);
+            $this->dispatch(new SaveFileToFilesystem($directory, $filename));
+        }
+    }
+
+    public function getUploadedFile(Request $request, $directory, Project $project, $filename)
+    {
+        $this->authorize($project);
+        return Image::make(Storage::get("{$directory}/{$project->id}/{$filename}"))->fit(100)->encode('data-url');
     }
 }

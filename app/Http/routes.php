@@ -33,8 +33,6 @@ Route::group(['middleware' => ['web']], function ()
         Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
         Route::post('password/reset', 'Auth\PasswordController@reset');
 
-
-
         Route::get('/home', 'HomeController@index');
         Route::get('about', function ()
         {
@@ -45,7 +43,10 @@ Route::group(['middleware' => ['web']], function ()
 
         Route::group(['middleware' => ['auth']], function ()
         {
-            Route::resource('project','ProjectController');
+            Route::resource('project', 'ProjectController');
+            Route::post('account/update/{user}', 'Auth\AuthController@updateUser')->name('updateUser');
+            Route::post('resize/{project}', 'ProjectController@resize')->name('projectResize');
+            Route::get('file/{directory}/{project}/{filename}', 'ProjectController@getUploadedFile')->name('getUploadedFile');
         });
 
         Route::post(

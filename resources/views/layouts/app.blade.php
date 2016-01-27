@@ -45,8 +45,8 @@
         })()
     </script>
 @endif
-
 @include('_includes.alerts')
+@yield('scripts')
 @include('_includes.googleAnalytics')
 </body>
 </html>

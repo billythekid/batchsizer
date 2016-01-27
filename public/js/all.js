@@ -3047,12 +3047,12 @@ exports.colorLuminance = colorLuminance;
 Dropzone.autoDiscover = false;
 
 $('#filezone').dropzone({
-    dictDefaultMessage: "Drop images here, max 5 at a time.",
+    dictDefaultMessage: "Drop images here, max 10 at a time.",
     paramName: "picture",
-    maxFilesize: 5,
+    maxFilesize: 10,
     uploadMultiple: true,
-    maxFiles: 5,
-    parallelUploads: 5,
+    maxFiles: 10,
+    parallelUploads: 10,
     addRemoveLinks: true,
     acceptedFiles: 'image/*',
     init: function () {

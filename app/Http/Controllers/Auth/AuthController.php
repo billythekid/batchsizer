@@ -40,7 +40,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('guest', ['except' => ['logout', 'updateUser']]);
     }
 
     /**
@@ -80,7 +80,7 @@ class AuthController extends Controller
         if ($plan == 'project')
         {
             $user->createAsStripeCustomer($token);
-            if (! $user->charge('500', ['description' => 'Project Account Purchase']))
+            if (!$user->charge('500', ['description' => 'Project Account Purchase']))
             {
                 $user->active = false;
                 $user->save();
@@ -98,6 +98,29 @@ class AuthController extends Controller
         }
 
         return redirect($this->redirectPath());
+    }
+
+
+    public function updateUser(Request $request, User $user)
+    {
+        if ($request->user()->id !== $user->id)
+        {
+            abort(403);
+        }
+        $this->validate($request, [
+            'name'     => 'max:255',
+            'email'    => "email|max:255|unique:users,email,{$user->id}",
+            'password' => 'confirmed|min:6',
+        ]);
+
+        $user->update($request->all());
+        if ($request->has('password'))
+        {
+            $user->password = bcrypt($request->input('password'));
+            $user->save();
+        }
+        alert()->success('Updated!', 'Your account has been updated');
+        return redirect()->back();
     }
 
     /**
