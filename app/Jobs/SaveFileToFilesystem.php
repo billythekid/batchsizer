@@ -28,7 +28,7 @@ class SaveFileToFilesystem extends Job implements ShouldQueue
      */
     public function __construct($directory, $file)
     {
-
+        $this->connection = 'database';
         $this->directory = $directory;
         $this->file = $file;
     }

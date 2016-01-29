@@ -39,7 +39,7 @@
                 $('#uploaded-project-files').append('<div class="col-xs-4 col-sm-3 col-md-2{{ str_slug($params[2]) }}"><i class="img-thumbnail icon-{{ str_slug($params[2]) }} fa-5x fa fa-file-archive-o"></i><br>{{ $params[2] }}</div>');
             @else
                 @if(str_contains($file,"/btk-tn-"))
-                    $('#uploaded-project-files').append('<div class="col-xs-4 col-sm-3 col-md-2{{ str_slug($params[2]) }}"><i class="icon-{{ str_slug($params[2]) }} fa-5x fa fa-circle-o-notch fa-spin"></i></div>')
+                    $('#uploaded-project-files').append('<div class="col-xs-4 col-sm-3 col-md-2{{ str_slug($params[2]) }}"><i class="icon-{{ str_slug($params[2]) }} fa-5x fa fa-circle-o-notch fa-spin"></i><br>{{ str_replace('btk-tn-','',$params[2]) }}</div>')
                     $.get('{{ route('getUploadedFile', ['directory'=>$params[0],'project'=>$params[1],'filename'=>$params[2]]) }}')
                         .success(function (data) {
                             $('#uploaded-project-files .icon-{{ str_slug($params[2]) }}')
