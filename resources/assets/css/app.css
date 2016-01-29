@@ -65,3 +65,7 @@ span.price {
 .stripe-button-el {
     display: none !important;
 }
+
+#uploaded-project-files div {
+    margin-bottom: 1em;
+}

@@ -159,11 +159,13 @@ class ProjectController extends Controller
                 $thumbnailName = "btk-tn-{$filename}";
                 $tn = Image::make($file);
                 $tn->fit(100)->save($filePath . "/" . $thumbnailName, 95);
-                $this->dispatch(new SaveFileToFilesystem($directory, $thumbnailName));
+                $thumbJob = (new SaveFileToFilesystem($directory, $thumbnailName));
+                $this->dispatch($thumbJob);
             }
 
             $file->move($filePath, $filename);
-            $this->dispatch(new SaveFileToFilesystem($directory, $filename));
+            $job = (new SaveFileToFilesystem($directory, $filename));
+            $this->dispatch($job);
 
         }
     }
