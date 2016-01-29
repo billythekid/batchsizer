@@ -70,9 +70,10 @@
 
     <hr>
 
+    {{--
     <div class="plans">
         @include('_includes.plans')
     </div>
-
+    --}}
     @include('_includes.progress')
 @endsection
