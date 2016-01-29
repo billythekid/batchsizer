@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Intervention\Image\Facades\Image;
 
 
 class SaveFileToFilesystem extends Job implements ShouldQueue
@@ -40,10 +41,11 @@ class SaveFileToFilesystem extends Job implements ShouldQueue
     public function handle()
     {
         DB::reconnect();
-        $resource = fopen(storage_path()."/app/{$this->directory}/{$this->file}", 'r');
         $saveName = "{$this->directory}/{$this->file}";
+        $filePath = storage_path() . "/app/{$saveName}";
+        $resource = fopen($filePath, 'r');
         Storage::put($saveName, $resource);
         fclose($resource);
-        @unlink(storage_path()."/app/{$this->directory}/{$this->file}");
+        @unlink(storage_path() . "/app/{$this->directory}/{$this->file}");
     }
 }

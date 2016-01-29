@@ -135,10 +135,13 @@ class ProjectController extends Controller
         $this->authorize($project);
         $files = $request->files->all()['file'];
 
-        if ($project->save_uploads){
+        if ($project->save_uploads)
+        {
             $directory = 'projects/' . $project->id;
             $this->saveFiles($directory, $files);
         }
+
+
 
 
         return response()->json(['status' => 'success']);
@@ -149,14 +152,26 @@ class ProjectController extends Controller
         foreach ($files as $file)
         {
             $filename = $file->getClientOriginalName();
-            $file->move('../storage/app/'.$directory,$filename);
+            $filePath = storage_path() . '/app/' . $directory;
+
+            if (str_contains($file->getMimeType(), "image"))
+            {
+                $thumbnailName = "btk-tn-{$filename}";
+                $tn = Image::make($file);
+                $tn->fit(100)->save($filePath . "/" . $thumbnailName, 95);
+                $this->dispatch(new SaveFileToFilesystem($directory, $thumbnailName));
+            }
+
+            $file->move($filePath, $filename);
             $this->dispatch(new SaveFileToFilesystem($directory, $filename));
+
         }
     }
 
     public function getUploadedFile(Request $request, $directory, Project $project, $filename)
     {
         $this->authorize($project);
-        return Image::make(Storage::get("{$directory}/{$project->id}/{$filename}"))->fit(100)->encode('data-url');
+
+        return Image::make(Storage::get("{$directory}/{$project->id}/{$filename}"))->encode('data-url');
     }
 }

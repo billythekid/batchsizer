@@ -48,10 +48,16 @@
                             constrain aspect ratios to prevent squishing but will best-fit-crop to those dimensions
                         </small>
                     </li>
-                    <li>If you want images smaller than the dimensions you put in to be scaled up, deselect the upscale checkbox.</li>
+                    <li>
+                        <small>
+                            If you want images smaller than the dimensions you put in to be scaled up, deselect the
+                            upscale checkbox. (Up-scaled images can appear of visibly lower quality)
+                        </small>
+                    </li>
                 </ul>
             </li>
-            <li>Drag all the images (10MB max per image, 10 images max) you want to be resized into the big box. (Or click
+            <li>Drag all the images (10MB max per image, 10 images max) you want to be resized into the big box. (Or
+                click
                 in
                 the box and select your images in the browser)
             </li>
