@@ -21,7 +21,9 @@
                     <li>Increased image upload limits (25 images at a time)</li>
                 </ul>
                 <hr>
-                <a href="{{ route('signup','project') }}" class="btn btn-block btn-primary">Get Project Access</a>
+                {{--<a href="{{ route('signup','project') }}" class="btn btn-block btn-primary">Get Project Access</a>--}}
+                <button disabled class="btn btn-block btn-primary">Get Project Access</button>
+
             </div>
         </div>
     </div>
