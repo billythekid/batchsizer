@@ -2,7 +2,7 @@
 
 <div class="row">
     <hr>
-    <div class="col-md-4">
+    <div class="col-md-4 coming-soon">
         <div class="panel panel-danger">
             <div class="panel-heading">Project Access <span
                         class="price btn-danger"><strong>$5</strong>/project</span></div>
@@ -17,7 +17,7 @@
                 <p>More image options</p>
                 <ul>
                     <li>Adjust the quality of your images</li>
-                    <li>Get black &amp; white images</li>
+                    <li>Get black &amp; white images (or blueify, redify, greenify, pixelate and more...)</li>
                     <li>Increased image upload limits (25 images at a time)</li>
                 </ul>
                 <hr>
@@ -42,7 +42,7 @@
                 <p>More image options</p>
                 <ul>
                     <li>Adjust the quality of your images</li>
-                    <li>Get black &amp; white images</li>
+                    <li>Get black &amp; white images (or blueify, redify, greenify, pixelate and more...)</li>
                     <li>Increased image upload limits (25 images at a time)</li>
                 </ul>
                 <p>Email Resizing</p>
@@ -72,7 +72,7 @@
                 <p>More image options</p>
                 <ul>
                     <li>Adjust the quality of your images</li>
-                    <li>Get black &amp; white images</li>
+                    <li>Get black &amp; white images (or blueify, redify, greenify, pixelate and more...)</li>
                     <li>Increased image upload limits (25 images at a time)</li>
                 </ul>
                 <p>Email Resizing</p>
