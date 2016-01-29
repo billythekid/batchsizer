@@ -33,7 +33,6 @@ Route::group(['middleware' => ['web']], function ()
         Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
         Route::post('password/reset', 'Auth\PasswordController@reset');
 
-
         Route::get('/home', 'HomeController@index');
         Route::get('about', function ()
         {
@@ -42,6 +41,13 @@ Route::group(['middleware' => ['web']], function ()
 
         Route::get('signup/{plan}', 'SignupController@showPlan')->middleware('guest')->name('signup');
 
+        Route::group(['middleware' => ['auth']], function ()
+        {
+            Route::resource('project', 'ProjectController');
+            Route::post('account/update/{user}', 'Auth\AuthController@updateUser')->name('updateUser');
+            Route::post('resize/{project}', 'ProjectController@resize')->name('projectResize');
+            Route::get('file/{directory}/{project}/{filename}', 'ProjectController@getUploadedFile')->name('getUploadedFile');
+        });
 
         Route::post(
             'stripe/webhook',
@@ -55,7 +61,7 @@ Route::group(['middleware' => ['web']], function ()
         $channel = md5(str_random() . time());
 
         return view('index', compact('channel'));
-    });
+    })->middleware('guest');
     Route::post('batchsizer', 'ResizeController@resize')->name('batchsizer');
 
     Route::get('batches/{batch}', 'ResizeController@serveBatch');

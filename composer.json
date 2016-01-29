@@ -14,7 +14,8 @@
         "pusher/pusher-php-server": "~2.0",
         "FortAwesome/Font-Awesome": "^4.5",
         "infinety/sweetalert": "dev-master",
-        "laravel/cashier": "^6.0"
+        "laravel/cashier": "^6.0",
+        "league/flysystem-aws-s3-v3": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

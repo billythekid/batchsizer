@@ -1458,8 +1458,13 @@ body {
     font-size: 3em;
 }
 
-#responsive-label {
+.btkzone label {
     font-size: 0.75em;
+    margin-bottom: 0.75em;
+}
+
+.btkzone div.checkbox {
+    text-align: left;
 }
 
 .progress {
@@ -1470,11 +1475,18 @@ body {
     right: 0;
     top: 0;
     z-index: 1;
-    /* height: 3em;*/
 }
 
 .btkzone {
     border-radius: 1em;
+}
+
+.coming-soon .panel {
+    background-image: url(/images/comingsoon.png);
+    opacity: .5;
+    background-size: contain;
+    background-position-y: center;
+    background-repeat-y: no-repeat;
 }
 
 span.price {
