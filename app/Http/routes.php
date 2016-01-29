@@ -18,42 +18,38 @@ use Illuminate\Support\Facades\Input;
 
 Route::group(['middleware' => ['web']], function ()
 {
-    if (App::environment('local'))
+    Route::get('login', 'Auth\AuthController@showLoginForm')->name('login');
+    Route::post('login', 'Auth\AuthController@login');
+    Route::get('logout', 'Auth\AuthController@logout')->name('logout');
+
+    // Registration Routes...
+    Route::post('register/{plan}', 'Auth\AuthController@register')->name('register');
+
+    // Password Reset Routes...
+    Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+    Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+    Route::post('password/reset', 'Auth\PasswordController@reset');
+
+    Route::get('/home', 'HomeController@index');
+    Route::get('about', function ()
     {
+        return view()->make('about');
+    })->name('about');
 
-        Route::get('login', 'Auth\AuthController@showLoginForm')->name('login');
-        Route::post('login', 'Auth\AuthController@login');
-        Route::get('logout', 'Auth\AuthController@logout')->name('logout');
+    Route::get('signup/{plan}', 'SignupController@showPlan')->middleware('guest')->name('signup');
 
-        // Registration Routes...
-        Route::post('register/{plan}', 'Auth\AuthController@register')->name('register');
+    Route::group(['middleware' => ['auth']], function ()
+    {
+        Route::resource('project', 'ProjectController');
+        Route::post('account/update/{user}', 'Auth\AuthController@updateUser')->name('updateUser');
+        Route::post('resize/{project}', 'ProjectController@resize')->name('projectResize');
+        Route::get('file/{directory}/{project}/{filename}', 'ProjectController@getUploadedFile')->name('getUploadedFile');
+    });
 
-        // Password Reset Routes...
-        Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
-        Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
-        Route::post('password/reset', 'Auth\PasswordController@reset');
-
-        Route::get('/home', 'HomeController@index');
-        Route::get('about', function ()
-        {
-            return view()->make('about');
-        })->name('about');
-
-        Route::get('signup/{plan}', 'SignupController@showPlan')->middleware('guest')->name('signup');
-
-        Route::group(['middleware' => ['auth']], function ()
-        {
-            Route::resource('project', 'ProjectController');
-            Route::post('account/update/{user}', 'Auth\AuthController@updateUser')->name('updateUser');
-            Route::post('resize/{project}', 'ProjectController@resize')->name('projectResize');
-            Route::get('file/{directory}/{project}/{filename}', 'ProjectController@getUploadedFile')->name('getUploadedFile');
-        });
-
-        Route::post(
-            'stripe/webhook',
-            '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook'
-        );
-    }
+    Route::post(
+        'stripe/webhook',
+        '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook'
+    );
 
 
     Route::get('/', function ()
@@ -79,6 +75,5 @@ Route::group(['middleware' => ['web']], function ()
 
         return redirect()->back();
     })->name('feedback');
-
 
 });
