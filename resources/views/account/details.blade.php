@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-info">
     <div class="panel-heading">Account - ({{ ucfirst(Auth::user()->plan()) }} account)</div>
 
     <div class="panel-body">

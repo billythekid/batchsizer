@@ -33,22 +33,29 @@
     </script>
 
     <script>
-        @foreach(Storage::files("projects/{$project->id}") as $file)
+        @foreach(Storage::files("projects/{$project->id}/uploads") as $file)
         <?php $params = explode('/',$file); ?>
             @if(ends_with($file,'.zip'))
-                $('#uploaded-project-files').append('<div class="col-xs-4 col-sm-3 col-md-2{{ str_slug($params[2]) }}"><i class="img-thumbnail icon-{{ str_slug($params[2]) }} fa-5x fa fa-file-archive-o"></i><br>{{ $params[2] }}</div>');
-            @else
-                @if(str_contains($file,"/btk-tn-"))
-                    $('#uploaded-project-files').append('<div class="col-xs-4 col-sm-3 col-md-2{{ str_slug($params[2]) }}"><i class="icon-{{ str_slug($params[2]) }} fa-5x fa fa-circle-o-notch fa-spin"></i><br>{{ str_replace('btk-tn-','',$params[2]) }}</div>')
-                    $.get('{{ route('getUploadedFile', ['directory'=>$params[0],'project'=>$params[1],'filename'=>$params[2]]) }}')
-                        .success(function (data) {
-                            $('#uploaded-project-files .icon-{{ str_slug($params[2]) }}')
-                                .after('<img class="{{ str_slug($params[2]) }} img-thumbnail" src="' + data + '" alt="{{ $params[2] }}">')
-                                .remove();
-                        });
-                @endif
-            @endif
+                $('#uploaded-project-files').append('<div class="col-xs-4 col-sm-3 col-md-2 {{ str_slug($params[3]) }}"><i class="img-thumbnail icon-{{ str_slug($params[3]) }} fa-5x fa fa-file-archive-o"></i><br>{{ $params[3] }}</div>');
+        @else
+            @if(str_contains($file,"/btk-tn-"))
+                $('#uploaded-project-files').append('<div class="col-xs-4 col-sm-3 col-md-2 {{ str_slug($params[3]) }}"><i class="icon-{{ str_slug($params[3]) }} fa-5x fa fa-circle-o-notch fa-spin"></i><br>{{ str_replace('btk-tn-','',$params[3]) }}</div>')
+        $.get('{{ route('getUploadedFile', ['directory'=>$params[0],'project'=>$params[1],'filename'=>$params[3]]) }}')
+                .success(function (data) {
+                    $('#uploaded-project-files .icon-{{ str_slug($params[3]) }}')
+                            .after('<img class="{{ str_slug($params[3]) }} img-thumbnail" src="' + data + '" alt="{{ $params[3] }}">')
+                            .remove();
+                });
+        @endif
+        @endif
         @endforeach
+    </script>
+
+    <script>
+        $('#download').change(function () {
+            var target = $('.progress');
+            this.checked ? target.show() : target.hide();
+        });
     </script>
 
 @endsection

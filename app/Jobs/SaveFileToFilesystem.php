@@ -18,6 +18,10 @@ class SaveFileToFilesystem extends Job implements ShouldQueue
 
     private $directory;
     private $file;
+    /**
+     * @type
+     */
+    private $realPath;
 
     /**
      * Create a new job instance.
@@ -26,11 +30,12 @@ class SaveFileToFilesystem extends Job implements ShouldQueue
      * @param $file
      * @internal param $files
      */
-    public function __construct($directory, $file)
+    public function __construct($realPath, $directory, $file)
     {
         $this->connection = 'database';
         $this->directory = $directory;
         $this->file = $file;
+        $this->realPath = $realPath;
     }
 
     /**
@@ -42,10 +47,9 @@ class SaveFileToFilesystem extends Job implements ShouldQueue
     {
         DB::reconnect();
         $saveName = "{$this->directory}/{$this->file}";
-        $filePath = storage_path() . "/app/{$saveName}";
-        $resource = fopen($filePath, 'r');
+        $resource = fopen($this->realPath, 'r');
         Storage::put($saveName, $resource);
         fclose($resource);
-        @unlink(storage_path() . "/app/{$this->directory}/{$this->file}");
+        //@unlink($this->realPath);
     }
 }
