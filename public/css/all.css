@@ -1461,6 +1461,7 @@ body {
 .btkzone label {
     font-size: 0.75em;
     margin-bottom: 0.75em;
+    font-weight: normal;
 }
 
 .btkzone div.checkbox {
