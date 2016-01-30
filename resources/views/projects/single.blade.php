@@ -4,6 +4,7 @@
     @include('projects.ownerTools')
     @include('projects.emailAddress')
     @include('projects.uploader')
+    @include('projects.resizedFiles')
 @endsection
 
 @section('scripts')
@@ -13,22 +14,32 @@
             paramName: "file",
             maxFilesize: 10,
             uploadMultiple: true,
-            maxFiles: 50,
-            parallelUploads: 50,
+            maxFiles: 25,
+            parallelUploads: 25,
             addRemoveLinks: true,
             acceptedFiles: 'image/*,.zip',
             init: function () {
                 this.on("successmultiple", function (file, response) {
                     this.removeAllFiles();
-                    //console.log(response);
                     @if($project->save_uploads)
                         $(".dz-message").html("Thanks. Your images will show below when saved to our secure server.<br>Drop zips or images from your device here")
                     @endif
+                    if (response.url)
+                    {
+                        window.location = response.url;
+                    }
                 });
                 this.on("drop", function (file) {
                     document.getElementsByClassName("progress")[0].classList.remove('hidden');
                 });
             }
+        });
+    </script>
+
+    <script>
+        $("#red,#green,#blue").slider({
+            reversed : true,
+            tooltip: 'always'
         });
     </script>
 
@@ -48,6 +59,10 @@
                 });
         @endif
         @endif
+        @endforeach
+        @foreach(Storage::files("projects/{$project->id}/resized") as $file)
+        <?php $params = explode('/',$file); ?>
+                $('#resized-project-files').append('<div class="col-xs-4 col-sm-3 col-md-2 {{ str_slug($params[3]) }}"><i class="img-thumbnail icon-{{ str_slug($params[3]) }} fa-5x fa fa-file-archive-o"></i><br>{{ $params[3] }}</div>');
         @endforeach
     </script>
 

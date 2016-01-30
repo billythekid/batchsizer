@@ -50,6 +50,5 @@ class SaveFileToFilesystem extends Job implements ShouldQueue
         $resource = fopen($this->realPath, 'r');
         Storage::put($saveName, $resource);
         fclose($resource);
-        //@unlink($this->realPath);
     }
 }

@@ -31,11 +31,35 @@
                         <option value="xl">XL (20px)</option>
                     </select>
                     @if($project->save_resized_zips) {{-- Otherwise where will they go? --}}
-                        <div class="checkbox checkbox-info">
-                            <input class="styled" type="checkbox" name="download" id="download" checked>
-                            <label id="download-label" for="download">Download immediately?</label>
-                        </div>
+                    <div class="checkbox checkbox-info">
+                        <input class="styled" type="checkbox" name="download" id="download" checked>
+                        <label id="download-label" for="download">Download immediately?</label>
+                    </div>
                     @endif
+                    <div class="col-xs-12">
+                        <label>Adjust colour levels</label>
+                    </div>
+
+                    <div class="col-xs-4">
+                        <p>R</p>
+                        <input id="red" name="red" type="text" data-slider-min="-100" data-slider-max="100"
+                               data-slider-step="1"
+                               data-slider-value="0" data-slider-orientation="vertical" data-slider-id="rb"/>
+                    </div>
+                    <div class="col-xs-4">
+
+                        <p>G</p>
+                        <input id="green" name="green" type="text" data-slider-min="-100" data-slider-max="100"
+                               data-slider-step="1"
+                               data-slider-value="0" data-slider-orientation="vertical" data-slider-id="gb"/>
+                    </div>
+                    <div class="col-xs-4">
+                        <p>B</p>
+                        <input id="blue" name="blue" type="text" data-slider-min="-100" data-slider-max="100"
+                               data-slider-step="1"
+                               data-slider-value="0" data-slider-orientation="vertical" data-slider-id="bb"/>
+                    </div>
+
                 </div>
 
                 <div class="clearfix"></div>

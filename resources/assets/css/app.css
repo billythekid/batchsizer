@@ -69,4 +69,16 @@ span.price {
 
 #uploaded-project-files div {
     margin-bottom: 1em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#rb .slider-track-high {
+    background: #FF8282;
+}
+#gb .slider-track-high {
+    background: #428041;
+}
+#bb .slider-track-high {
+    background: #8283FF;
 }
