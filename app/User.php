@@ -41,5 +41,10 @@ class User extends Authenticatable
         return $this->subscriptions()->first()->name;
     }
 
+    public function getPlanAttribute()
+    {
+        return $this->plan();
+    }
+
 
 }

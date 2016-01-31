@@ -3,12 +3,12 @@
 namespace App\Jobs;
 
 use App\Jobs\Job;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Intervention\Image\Facades\Image;
 
 
 class SaveFileToFilesystem extends Job implements ShouldQueue
@@ -22,6 +22,10 @@ class SaveFileToFilesystem extends Job implements ShouldQueue
      * @type
      */
     private $realPath;
+    /**
+     * @type
+     */
+    private $deleteOnComplete;
 
     /**
      * Create a new job instance.
@@ -30,12 +34,13 @@ class SaveFileToFilesystem extends Job implements ShouldQueue
      * @param $file
      * @internal param $files
      */
-    public function __construct($realPath, $directory, $file)
+    public function __construct($realPath, $directory, $file, $deleteOnComplete)
     {
         $this->connection = 'database';
         $this->directory = $directory;
         $this->file = $file;
         $this->realPath = $realPath;
+        $this->deleteOnComplete = $deleteOnComplete;
     }
 
     /**
@@ -47,9 +52,13 @@ class SaveFileToFilesystem extends Job implements ShouldQueue
     {
         DB::reconnect();
         $saveName = "{$this->directory}/{$this->file}";
-        $resource = fopen($this->realPath, 'r');
-        Storage::put($saveName, $resource);
-        fclose($resource);
-        //@unlink($this->realPath);
+        if(File::exists($this->realPath))
+        {
+            Storage::put($saveName, File::get($this->realPath));
+        }
+        if ($this->deleteOnComplete)
+        {
+            File::delete($this->realPath);
+        }
     }
 }

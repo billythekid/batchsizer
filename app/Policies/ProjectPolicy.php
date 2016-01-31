@@ -51,7 +51,7 @@ class ProjectPolicy
      * @param Project $project
      * @return bool
      */
-    public function resize(User $user, Project $project)
+    public function handleUploads(User $user, Project $project)
     {
         return $project->members->contains($user);
     }
@@ -64,6 +64,11 @@ class ProjectPolicy
      * @return mixed
      */
     public function getUploadedFile(User $user, Project $project)
+    {
+        return $project->members->contains($user);
+    }
+
+    public function getDownload(User $user, Project $project)
     {
         return $project->members->contains($user);
     }

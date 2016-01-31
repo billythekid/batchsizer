@@ -42,7 +42,9 @@ Route::group(['middleware' => ['web']], function ()
     {
         Route::resource('project', 'ProjectController');
         Route::post('account/update/{user}', 'Auth\AuthController@updateUser')->name('updateUser');
-        Route::post('resize/{project}', 'ProjectController@resize')->name('projectResize');
+        Route::post('resize/{project}', 'ProjectController@handleUploads')->name('projectResize');
+
+        Route::get('download/{project}/{folder}/{file}', 'ProjectController@getDownload')->name('downloadProjectZip');
         Route::get('file/{directory}/{project}/{filename}', 'ProjectController@getUploadedFile')->name('getUploadedFile');
     });
 
