@@ -68,15 +68,50 @@
                                     @endif
                                 </div>
                             </div>
+                            <span class="payment-errors"></span>
+
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Card Number:</label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="tel" size="20" data-stripe="number" id="number"
+                                               class="form-control">
+                                        <div class="card input-group-addon"><i class="fa fa-cc-stripe"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">CVC: </label>
+                                <div class="col-xs-2">
+                                    <input type="tel" size="4" data-stripe="cvc" class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Expiration (MM/YYYY):</label>
+                                <div class="col-xs-3">
+                                    <div class="input-group">
+                                        <input type="tel" size="2" data-stripe="exp-month" class="form-control"/>
+                                        <div class="input-group-addon">/</div>
+                                        <input type="tel" size="4" data-stripe="exp-year" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fa fa-btn fa-user"></i> Register - {{ $plan }}
                                     </button>
-                                    <label>You will be asked for your billing details in a secure popup.</label>
+                                    <label>
+                                        Payments are securely handled by <a href="https://stripe.com">Stripe</a>.<br>
+                                        Your payment details don't hit our server.
+                                    </label>
                                 </div>
                             </div>
+                            {{--
                             <script
                                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                     data-key="{{ env('STRIPE_KEY') }}"
@@ -85,11 +120,44 @@
                                     data-description="{{ $plan }} Subscription ({{ $price['human'] }})"
                                     data-locale="auto">
                             </script>
+                            --}}
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
 
+@section('scripts')
+    <script>
+        $('#number').payment('formatCardNumber');
+    </script>
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript">
+        Stripe.setPublishableKey("{{ env('STRIPE_KEY') }}");
+        var stripeResponseHandler = function(status, response) {
+            var $form = $('form');
+            if (response.error) {
+                // Show the errors on the form
+                $form.find('.payment-errors').text(response.error.message);
+                $form.find('button').prop('disabled', false);
+            } else {
+                // token contains id, last4, and card type
+                var token = response.id;
+                // Insert the token into the form so it gets submitted to the server
+                $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+                // and re-submit
+                $form.get(0).submit();
+            }
+        };
+        jQuery(function($) {
+            $('form').submit(function(event) {
+                var $form = $(this);
+                $form.find('button').prop('disabled', true);
+                Stripe.card.createToken($form, stripeResponseHandler);
+                return false;
+            });
+        });
+    </script>
 @endsection
