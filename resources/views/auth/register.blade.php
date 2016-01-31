@@ -84,14 +84,14 @@
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">CVC: </label>
-                                <div class="col-xs-2">
+                                <div class="col-md-2">
                                     <input type="tel" size="4" data-stripe="cvc" class="form-control"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Expiration (MM/YYYY):</label>
-                                <div class="col-xs-3">
+                                <div class="col-md-3">
                                     <div class="input-group">
                                         <input type="tel" size="2" data-stripe="exp-month" class="form-control"/>
                                         <div class="input-group-addon">/</div>
@@ -99,7 +99,7 @@
                                     </div>
                                 </div>
                             </div>
-
+fixed
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
