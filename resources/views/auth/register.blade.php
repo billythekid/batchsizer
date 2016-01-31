@@ -107,7 +107,7 @@ fixed
                                     </button>
                                     <label>
                                         Payments are securely handled by <a href="https://stripe.com">Stripe</a>.<br>
-                                        Your payment details don't hit our server.
+                                        Your card details don't hit our server.
                                     </label>
                                 </div>
                             </div>
