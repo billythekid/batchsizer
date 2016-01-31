@@ -29,12 +29,12 @@
                             <input class="styled" type="checkbox" name="aspectratio" id="aspectratio" checked>
                             <label id="aspectratio-label" for="aspectratio">Maintain Aspect Ratio?</label><br>
                             @if($project->save_resized_zips) {{-- Otherwise where will they go? --}}
-                            <input class="styled" type="checkbox" name="download" id="download" checked>
-                            <label id="download-label" for="download">Download immediately?</label><br>
+                                <input class="styled" type="checkbox" name="download" id="download" checked>
+                                <label id="download-label" for="download">Download immediately?</label><br>
+                            @endif
                             <hr class="invisible">
                             <input class="styled" type="checkbox" name="greyscale" id="greyscale">
                             <label id="greyscale-label" for="greyscale">Black &amp; White images?</label>
-                            @endif
                         </div>
                     </div>
                     <div class="col-sm-4">
