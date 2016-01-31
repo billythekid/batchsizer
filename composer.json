@@ -13,7 +13,6 @@
     "guzzlehttp/guzzle": "~5.3|~6.0",
     "intervention/image": "^2.3",
     "chumper/zipper": "0.6.x",
-    //"alchemy/zippy": "~0.1",
     "genealabs/laravel-caffeine": "~0.3",
     "pusher/pusher-php-server": "~2.0",
     "FortAwesome/Font-Awesome": "^4.5",
