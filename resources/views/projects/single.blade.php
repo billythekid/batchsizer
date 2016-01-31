@@ -21,12 +21,20 @@
             init: function () {
                 this.on("successmultiple", function (file, response) {
                     this.removeAllFiles();
-                    @if($project->save_uploads)
-                        $(".dz-message").html("Thanks. Your images will show below when saved to our secure server.<br>Drop zips or images from your device here")
-                    @endif
-                    if (response.url)
-                    {
-                        window.location = response.url;
+                    if (response.status == 'success') {
+                        @if($project->save_uploads)
+                            $(".dz-message").html("Thanks. Your images will show below when saved to our secure server.<br>Drop zips or images from your device here")
+                        @endif
+                        if (response.url) {
+                            window.location = response.url;
+                        }
+                    } else if (response.status == 'error') {
+                        swal({
+                            title: "Error",
+                            text: response.message,
+                            type: "error",
+                            confirmButtonText: 'Ok'
+                        });
                     }
                 });
                 this.on("drop", function (file) {
@@ -37,32 +45,40 @@
     </script>
 
     <script>
-        $("#red,#green,#blue").slider({
-            reversed : true,
-            tooltip: 'always'
-        });
+        function bgrgb() {
+            var r = (parseInt($("#red").val()) + 100) / 2;
+            var g = (parseInt($("#green").val()) + 100) / 2;
+            var b = (parseInt($("#blue").val()) + 100) / 2;
+            var col = 'rgb(' + r + '%,' + g + '%,' + b + '%)';
+            $('#colourizehint').css('backgroundColor', col);
+        }
+        $("#red").slider({
+            reversed: true,
+            tooltip_position: 'left'
+        }).on('slide', bgrgb);
+        $("#green").slider({
+            reversed: true
+        }).on('slide', bgrgb);
+        $("#blue").slider({
+            reversed: true,
+            tooltip_position: 'right'
+        }).on('slide', bgrgb);
+        $("#quality,#blur").slider();
+        /*
+         .on('slide', function () {
+         $('#colourizehint').css('box-shadow', '0 0 ' + $(this).val() + 'px black inset');
+         });
+         */
     </script>
 
     <script>
-        @foreach(Storage::files("projects/{$project->id}/uploads") as $file)
-        <?php $params = explode('/',$file); ?>
-            @if(ends_with($file,'.zip'))
-                $('#uploaded-project-files').append('<div class="col-xs-4 col-sm-3 col-md-2 {{ str_slug($params[3]) }}"><i class="img-thumbnail icon-{{ str_slug($params[3]) }} fa-5x fa fa-file-archive-o"></i><br>{{ $params[3] }}</div>');
-        @else
-            @if(str_contains($file,"/btk-tn-"))
-                $('#uploaded-project-files').append('<div class="col-xs-4 col-sm-3 col-md-2 {{ str_slug($params[3]) }}"><i class="icon-{{ str_slug($params[3]) }} fa-5x fa fa-circle-o-notch fa-spin"></i><br>{{ str_replace('btk-tn-','',$params[3]) }}</div>')
-        $.get('{{ route('getUploadedFile', ['directory'=>$params[0],'project'=>$params[1],'filename'=>$params[3]]) }}')
+        @foreach($thumbnails as $thumbnail)
+        $.get('{{ route('getUploadedFile', [$thumbnail['directory'],$thumbnail['project'],$thumbnail['filename']]) }}')
                 .success(function (data) {
-                    $('#uploaded-project-files .icon-{{ str_slug($params[3]) }}')
-                            .after('<img class="{{ str_slug($params[3]) }} img-thumbnail" src="' + data + '" alt="{{ $params[3] }}">')
+                    $('#uploaded-project-files .icon-{{ str_slug($thumbnail['filename']) }}')
+                            .after('<img class="{{ str_slug($thumbnail['filename']) }} img-thumbnail" src="' + data + '" alt="{{ $thumbnail['filename'] }}">')
                             .remove();
                 });
-        @endif
-        @endif
-        @endforeach
-        @foreach(Storage::files("projects/{$project->id}/resized") as $file)
-        <?php $params = explode('/',$file); ?>
-                $('#resized-project-files').append('<div class="col-xs-4 col-sm-3 col-md-2 {{ str_slug($params[3]) }}"><i class="img-thumbnail icon-{{ str_slug($params[3]) }} fa-5x fa fa-file-archive-o"></i><br>{{ $params[3] }}</div>');
         @endforeach
     </script>
 

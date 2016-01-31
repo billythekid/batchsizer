@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\FileBeingProcessed;
-use App\Jobs\ResizeFile;
 use App\Project;
+use SplFileInfo;
 use App\Http\Requests;
-use Chumper\Zipper\Facades\Zipper;
-use Chumper\Zipper\Zipper as Zip;
+use App\Jobs\ResizeFile;
 use Illuminate\Http\Request;
+use Aws\S3\Exception\S3Exception;
+use Chumper\Zipper\Facades\Zipper;
+use App\Events\FileBeingProcessed;
 use App\Jobs\SaveFileToFilesystem;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use SplFileInfo;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -25,24 +25,25 @@ class ProjectController extends Controller
 
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        abort(404);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        abort(404);
+    }
+
+    public function edit(Project $project)
+    {
+        abort(404);
+    }
+
+    public function destroy(Project $project)
+    {
+        $this->authorize($project);
+        abort(404);
     }
 
     /**
@@ -86,20 +87,40 @@ class ProjectController extends Controller
     {
         $this->authorize($project);
         $channel = md5(str_random() . time());
+        try
+        {
+            $allFiles = Storage::allFiles("projects/{$project->id}/");
+        }
+        catch (S3Exception $e)
+        {
+            $allFiles = [];
+        }
+        $uploadedFiles = array_filter($allFiles, function ($string)
+        {
+            return str_contains($string, "uploads");
+        });
+        $resizedZips = array_filter($allFiles, function ($string)
+        {
+            return str_contains($string, "resized");
+        });
+        $thumbs = array_filter($uploadedFiles, function ($string)
+        {
+            return str_contains($string, "btk-tn");
+        });
+        $thumbnails = [];
+        foreach ($thumbs as &$thumb)
+        {
+            $thumbArray = explode('/', $thumb);
+            $thumbnails[] = [
+                'directory' => $thumbArray[0],
+                'project'   => $project->id,
+                'filename'  => end($thumbArray),
+            ];
+        }
 
-        return view()->make('projects.single', compact('project', 'channel'));
+        return view()->make('projects.single', compact('project', 'channel', 'uploadedFiles', 'thumbnails', 'resizedZips'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $project
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Project $project)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -125,17 +146,6 @@ class ProjectController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $project
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Project $project)
-    {
-        $this->authorize($project);
-        //
-    }
 
     /**
      * Our main method, when a person uploads their files, we sort it all out here
@@ -148,10 +158,23 @@ class ProjectController extends Controller
     {
         $this->authorize($project);
         $files = $request->files->all()['file'];
+        if ($request->user()->plan == 'project')
+        {
+            $files = array_filter($files, function ($file)
+            {
+                return ($file->getMimeType() != "application/zip");
+            });
+        }
+        if (empty($files))
+        {
+            return response()->json(['status' => 'error', 'message' => 'No images were uploaded!']);
+        }
+
         $sizes = $request->input('dimensions');
         $download = (!$project->save_resized_zips || $request->has('download'));
 
         $options = [
+            'quality'     => $request->input('quality'),
             'responsive'  => $request->has('responsive'),
             'noupscale'   => $request->has('noupscale'),
             'greyscale'   => $request->has('greyscale'),
@@ -160,6 +183,7 @@ class ProjectController extends Controller
             'red'         => $request->input('red'),
             'green'       => $request->input('green'),
             'blue'        => $request->input('blue'),
+            'blur'        => $request->input('blur'),
         ];
 
         $tempFiles = $this->SaveTempFiles($project, $files);
@@ -168,15 +192,19 @@ class ProjectController extends Controller
         if ($project->save_uploads)
         {
             $directory = 'projects/' . $project->id . '/uploads';
-            $this->saveFiles($directory, $tempFiles);
+            $this->saveFiles($directory, $tempFiles, true);
+        } else
+        {
+            File::delete($tempFiles);
         }
 
         if ($project->save_resized_zips)
         {
             $fileObject = new SplFileInfo($resizedZip['zip']);
             $directory = 'projects/' . $project->id . '/resized';
-            $this->saveFiles($directory, [$fileObject]);
+            $this->saveFiles($directory, [$fileObject], !$download);
         }
+
         if ($download)
         {
             $resizedZip['status'] = 'success';
@@ -188,7 +216,14 @@ class ProjectController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    private function saveFiles($directory, $tempFiles)
+    /**
+     * Sets up the queue job to save files to S3
+     *
+     * @param String        $directory
+     * @param SplFileInfo[] $tempFiles
+     * @param bool          $deleteOnComplete
+     */
+    private function saveFiles($directory, $tempFiles, $deleteOnComplete = false)
     {
         foreach ($tempFiles as $file)
         {
@@ -201,14 +236,13 @@ class ProjectController extends Controller
                 $thumbRealPath = $filePath . '/' . $thumbnailName;
                 $tn = Image::make($file);
                 $tn->fit(100)->save($thumbRealPath, 95);
-                $thumbJob = (new SaveFileToFilesystem($thumbRealPath, $directory, $thumbnailName));
+                $thumbJob = (new SaveFileToFilesystem($thumbRealPath, $directory, $thumbnailName, $deleteOnComplete));
                 $this->dispatch($thumbJob);
             }
-            $job = (new SaveFileToFilesystem($fileRealPath, $directory, $filename));
+            $job = (new SaveFileToFilesystem($fileRealPath, $directory, $filename, $deleteOnComplete));
             $this->dispatch($job);
         }
     }
-
 
     /**
      * @param Project $project
@@ -249,17 +283,23 @@ class ProjectController extends Controller
         finfo_close($finfo);
 
         return (str_contains($mime, "image"));
-
     }
 
     private function resizeFiles($project, $tempFiles, $sizesString, $options)
     {
         /*
-        $options['responsive'] = $request->has('responsive');
-        $options['noupscale'] = $request->has('noupscale');
-        $options['greyscale'] = $request->has('greyscale');
-        $options['aspectRatio'] = $request->has('aspectratio');
-        $options['pixelate'] = $request->input('pixelate');
+        $options = [
+            'quality'     => $request->input('quality'),
+            'responsive'  => $request->has('responsive'),
+            'noupscale'   => $request->has('noupscale'),
+            'greyscale'   => $request->has('greyscale'),
+            'aspectRatio' => $request->has('aspectratio'),
+            'pixelate'    => $request->input('pixelate'),
+            'red'         => $request->input('red'),
+            'green'       => $request->input('green'),
+            'blue'        => $request->input('blue'),
+            'blur'        => $request->input('blur'),
+        ];
          */
 
         $sizes = explode(',', $sizesString);
@@ -280,7 +320,19 @@ class ProjectController extends Controller
         $folder = storage_path("app/resizedfiles/{$project->id}/{$randomString}/");
 
         $zipFileName = "BatchSizer-" . str_slug($project->name) . $sizesString;
+        $zipFileName .= '-q' . $options['quality'];
         $zipFileName .= ($options['greyscale']) ? '-bw' : '';
+        $rgb = false;
+        if ($options['red'] != '0' || $options['green'] != '0' || $options['blue'] != '0')
+        {
+            $rgb = [
+                'r' => $options['red'],
+                'g' => $options['green'],
+                'b' => $options['blue'],
+            ];
+        }
+        $zipFileName .= ($rgb != false) ? "-r{$rgb['r']}g{$rgb['g']}b{$rgb['b']}" : "";
+        $zipFileName .= ($options['blur'] != 0) ? "-{$options['blur']}blur" : '';
         $zipFileName .= ($options['pixelate'] != 0) ? "-{$options['pixelate']}px" : '';
         $zipFileName .= ".zip";
         $zipFilePath = $folder . $zipFileName;
@@ -342,15 +394,17 @@ class ProjectController extends Controller
                 }
 
                 // now the image is resized, let's add our effects, if any.
-                $rgb = false;
                 if ($options['greyscale'])
                 {
                     $image->greyscale();
                 }
-                if ($options['red'] != '0' || $options['green'] != '0' || $options['blue'] != '0')
+                if ($rgb != false)
                 {
-                    $rgb = "{$options['red']},{$options['green']},{$options['blue']}";
-                    $image->colorize($options['red'],$options['green'],$options['blue']);
+                    $image->colorize($rgb['r'], $rgb['g'], $rgb['b']);
+                }
+                if ($options['blur'] != 0)
+                {
+                    $image->blur($options['blur']);
                 }
                 if ($options['pixelate'] != '0')
                 {
@@ -372,12 +426,14 @@ class ProjectController extends Controller
                 $width = $image->width();
                 $height = $image->height();
                 $imageName .= ".{$width}x{$height}";
+                $imageName .= '-q' . $options['quality'];
                 $imageName .= ($options['greyscale']) ? '-bw' : '';
-                $imageName .= ($rgb != false) ? "-rgb({$rgb})": "";
+                $imageName .= ($rgb != false) ? "-r{$rgb['r']}g{$rgb['g']}b{$rgb['b']}" : "";
+                $imageName .= ($options['blur'] != 0) ? "-{$options['blur']}blur" : '';
                 $imageName .= ($options['pixelate'] == '0') ? '' : "-{$options['pixelate']}px";
                 $imageName .= ".{$tempFile->getExtension()}";
                 // add it to the zip
-                $image->save($imageName, 100);
+                $image->save($imageName, $options['quality']);
                 $zip->addString($imageName, $image);
                 @unlink($imageName);
             }
