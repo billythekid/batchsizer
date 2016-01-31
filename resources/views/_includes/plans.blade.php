@@ -2,7 +2,7 @@
 
 <div class="row">
     <hr>
-    <div class="col-md-4 plan">
+    <div class="col-md-4 plan coming-soon">
         <div class="panel panel-danger">
             <div class="panel-heading">Project Access <span
                         class="price btn-danger"><strong>$5</strong>/project</span></div>
@@ -21,11 +21,10 @@
                     <li>Increased image upload limits (25 images at a time)</li>
                 </ul>
                 <hr>
-                <a href="{{ route('signup','project') }}" class="btn btn-block btn-primary">Get Project Access</a>
                 {{--
-                <button disabled class="btn btn-block btn-primary">Get Project Access</button>
+                <a href="{{ route('signup','project') }}" class="btn btn-block btn-primary">Get Project Access</a>
                 --}}
-
+                <button disabled class="btn btn-block btn-primary">Get Project Access</button>
             </div>
         </div>
     </div>
