@@ -17,7 +17,7 @@
                     <li>Adjust the quality of your images</li>
                     <li>Get black &amp; white images</li>
                     <li>Adjust the red green and blue values for your images</li>
-                    <li>Pixelate or blur images</li>
+                    <li>Pixelate images</li>
                     <li>Increased image upload limits (25 images at a time)</li>
                 </ul>
                 <hr>
