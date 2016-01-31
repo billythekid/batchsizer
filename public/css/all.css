@@ -1746,7 +1746,7 @@ body {
     background-repeat: no-repeat;
 }
 
-.plan .panel-body>p:first-child{
+.plan .panel-body > p:first-child {
     margin-right: 4em;
 }
 
@@ -1776,8 +1776,9 @@ span.price {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
 #colourizehint {
-    background-color: rgb(50%,50%,50%);
+    background-color: rgb(50%, 50%, 50%);
     /*opacity: 0.5;*/
     height: 14em;
     margin-top: 1em;
@@ -1786,10 +1787,51 @@ span.price {
 #rb .slider-track-high {
     background: #FF8282;
 }
+
 #gb .slider-track-high {
     background: #428041;
 }
+
 #bb .slider-track-high {
     background: #8283FF;
+}
+div.card:before {
+    font-family: FontAwesome;
+}
+.visa + div.card:before,
+.visaelectron + div.card:before {
+    content: "\f1f0";
+}
+.mastercard + div.card:before {
+    content: '\f1f1';
+}
+.amex + div.card:before {
+    content: '\f1f3';
+}
+.dinersclub + div.card:before {
+    content: '\f24c';
+}
+.discover + div.card:before {
+    content: '\f1f2';
+}
+.unionpay + div.card:before {
+    content: '\f20a';
+}
+.jcb + div.card:before {
+    content: '\f24b';
+}
+
+.maestro + div.card:before {
+    content: '\f20a';
+}
+.forbrugsforeningen + div.card:before {
+    content: '\f20a';
+}
+.dankort + div.card:before {
+    content: '\f20a';
+}
+
+.identified + div.card > i {
+    display: none;
 }
 /*# sourceMappingURL=all.css.map */

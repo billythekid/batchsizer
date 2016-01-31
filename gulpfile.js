@@ -16,6 +16,19 @@ elixir(function (mix) {
         //.copy('resources/assets/sass/bootstrap-sass/assets/fonts/bootstrap', 'public/fonts')
         //.copy('node_modules/bootstrap-sass','resources/assets/sass/bootstrap-sass') // uncomment to overwrite changes.
         .sass('app.scss')
-        .styles(['sweetalert.css', 'dropzone.css', 'bootstrap-slider.css', 'app.css'])
-        .scripts(['jquery.min.js', 'bootstrap.min.js', 'sweetalert.js', 'dropzone.js', 'bootstrap-slider.min.js', 'app.js']);
+        .styles([
+            'sweetalert.css',
+            'dropzone.css',
+            'bootstrap-slider.css',
+            'app.css'
+        ])
+        .scripts([
+            'jquery.min.js',
+            'jquery.payment.js',
+            'bootstrap.min.js',
+            'sweetalert.js',
+            'dropzone.js',
+            'bootstrap-slider.min.js',
+            'app.js'
+        ]);
 });
