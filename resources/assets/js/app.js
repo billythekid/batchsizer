@@ -30,7 +30,10 @@ function showFeedbackForm() {
         animation: "slide-from-top",
         inputPlaceholder: "Write something"
     }, function (inputValue) {
-        if (inputValue === false) return false;
+        if (inputValue === false)
+        {
+            return false;
+        }
         if (inputValue === "") {
             swal.showInputError("You need to write something!");
             return false
