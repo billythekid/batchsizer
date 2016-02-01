@@ -12,6 +12,11 @@ class SignupController extends Controller
 
     public function showPlan($plan)
     {
+        if (!in_array($plan,['project','freelancer']))
+        {
+            abort(404);
+        }
+
         $plan = ucfirst($plan);
 
         switch ($plan)
