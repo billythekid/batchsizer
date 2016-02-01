@@ -36,9 +36,9 @@
 
 
 <div class="panel panel-info">
-    <div class="panel-heading">Invoices</div>
+    <div class="panel-heading">Receipts</div>
     <div class="panel-body">
-        <table>
+        <table class="table table-hover">
             @foreach ($invoices as $invoice)
                 <tr>
                     <td>{{ $invoice->date()->toFormattedDateString() }}</td>

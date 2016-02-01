@@ -3,7 +3,7 @@
         {!! csrf_field() !!}
         <div class="form-group">
             <label for="feedback">Feedback:</label>
-            <textarea name="feedback" id="feedback" class="form-control">{{ old('body') }}</textarea>
+            <textarea name="feedback" id="feedback" class="form-control"></textarea>
         </div>
         <div class="form-group">
             <button class="btn btn-primary form-control">Send Feedback</button>

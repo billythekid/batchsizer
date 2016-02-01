@@ -54,6 +54,14 @@ Route::group(['middleware' => ['web']], function ()
         Route::get('file/{directory}/{project}/{filename}', 'ProjectController@getUploadedFile')->name('getUploadedFile');
 
         Route::delete('deleteFile/{project}', 'ProjectController@deleteFile')->name('deleteFile');
+
+        Route::get('user/invoice/{invoice}', function ($invoiceId) {
+            return Auth::user()->downloadInvoice($invoiceId, [
+                'vendor'  => 'BatchSizer.co.uk',
+                'product' => 'Subscription',
+            ]);
+        });
+
     });
 
     Route::get('/', function ()

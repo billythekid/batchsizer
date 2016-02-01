@@ -18,7 +18,8 @@
     "FortAwesome/Font-Awesome": "^4.5",
     "infinety/sweetalert": "dev-master",
     "laravel/cashier": "^6.0",
-    "league/flysystem-aws-s3-v3": "^1.0"
+    "league/flysystem-aws-s3-v3": "^1.0",
+    "dompdf/dompdf": "^0.6.2"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
