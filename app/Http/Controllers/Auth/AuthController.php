@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Validator;
+use Illuminate\Http\Request;
+use Laravel\Cashier\Billable;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -75,7 +76,15 @@ class AuthController extends Controller
 
         $user = Auth::user();
         $token = $request->input('stripeToken');
-        $user->createAsStripeCustomer($token);
+        $customer = $user->createAsStripeCustomer($token);
+
+        // no idea why we can't create the subscription withCoupon, so let's
+        // assign it to the customer here.
+        if ($request->has('coupon'))
+        {
+            $customer->coupon = $request->input('coupon');
+            $customer->save();
+        }
         if ($plan == 'project')
         {
             if (!$user->charge('500', ['description' => 'Project Account Purchase']))
@@ -89,12 +98,7 @@ class AuthController extends Controller
 
         try
         {
-            $subscription = $user->newSubscription($plan, 'batchsizer-' . $plan);
-            if ($request->has('coupon'))
-            {
-                $subscription->withCoupon($request->input('coupon'));
-            }
-            $subscription->create($token);
+            $subscription = $user->newSubscription($plan, 'batchsizer-' . $plan)->create($token);
         }
         catch (Exception $e)
         {
@@ -106,7 +110,8 @@ class AuthController extends Controller
 
     public function changePlan(Request $request, User $user)
     {
-
+        alert()->info('BetaMode', "Sorry, we have still to hook this up. Thanks for your patience while we are in beta.");
+        return redirect()->back();
     }
 
 

@@ -47,7 +47,7 @@ Route::group(['middleware' => ['web']], function ()
     {
         Route::resource('project', 'ProjectController');
         Route::post('account/update/{user}', 'Auth\AuthController@updateUser')->name('updateUser');
-        Route::post('plan/update/{user}', 'Auth\AuthController@updateUser')->name('changePlan');
+        Route::post('plan/update/{user}', 'Auth\AuthController@changePlan')->name('changePlan');
         Route::post('resize/{project}', 'ProjectController@handleUploads')->name('projectResize');
 
         Route::get('download/{project}/{folder}/{file}', 'ProjectController@downloadFile')->name('downloadProjectZip');
