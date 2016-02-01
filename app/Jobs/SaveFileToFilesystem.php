@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Jobs\Job;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
@@ -52,12 +53,16 @@ class SaveFileToFilesystem extends Job implements ShouldQueue
     {
         DB::reconnect();
         $saveName = "{$this->directory}/{$this->file}";
+        Log::info('---SaveFileToSystem---'. "\n\tSaving {$this->realPath}\n\tTo {$saveName}");
         if(File::exists($this->realPath))
         {
             Storage::put($saveName, File::get($this->realPath));
+        } else {
+            Log::error('---SaveFileToSystem---'. "\n\t{$this->realPath} does not exist");
         }
         if ($this->deleteOnComplete)
         {
+            Log::info('---Deleting---: '. "{$this->realPath}");
             File::delete($this->realPath);
         }
     }

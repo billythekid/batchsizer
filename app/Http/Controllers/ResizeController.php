@@ -127,7 +127,7 @@ class ResizeController extends Controller
     protected function resizeFileByDimensionsAndAddToZip($request, $file, $width, $height, $zipper)
     {
         $extension = $file->getClientOriginalExtension();
-        if($width == 0)
+        if ($width == 0)
         {
             $img = Image::make($file);
             $width = $img->width();
@@ -162,7 +162,7 @@ class ResizeController extends Controller
     private function responsiveResize($request, $file, $width, $zipper)
     {
         $extension = $file->getClientOriginalExtension();
-        if($width == 0)
+        if ($width == 0)
         {
             $img = Image::make($file);
             $width = $img->width();
@@ -187,12 +187,11 @@ class ResizeController extends Controller
         @unlink($resizedName);
     }
 
-    private
-    function getUploadLimit(Request $request)
+    private function getUploadLimit(Request $request)
     {
         if (Auth::check())
         {
-
+            return 25;
         }
 
         return 10; //not logged in

@@ -11,6 +11,7 @@ use Aws\S3\Exception\S3Exception;
 use Chumper\Zipper\Facades\Zipper;
 use App\Events\FileBeingProcessed;
 use App\Jobs\SaveFileToFilesystem;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -188,6 +189,8 @@ class ProjectController extends Controller
 
         $tempFiles = $this->SaveTempFiles($project, $files);
         $resizedZip = $this->resizeFiles($project, $tempFiles, $sizes, $options);
+        $resizedZipObject = new SplFileInfo($resizedZip['zip']);
+
 
         if ($project->save_uploads)
         {
@@ -200,13 +203,19 @@ class ProjectController extends Controller
 
         if ($project->save_resized_zips)
         {
-            $fileObject = new SplFileInfo($resizedZip['zip']);
             $directory = 'projects/' . $project->id . '/resized';
-            $this->saveFiles($directory, [$fileObject], !$download);
+            $this->saveFiles($directory, [0 => $resizedZipObject], true);
         }
 
         if ($download)
         {
+            if (File::exists($resizedZip['zip']))
+            {
+                $original = $resizedZipObject->getRealPath();
+                $copy = $resizedZipObject->getPath() . "/download.zip";
+                File::copy($original, $copy);
+            }
+
             $resizedZip['status'] = 'success';
             unset($resizedZip['zip']);
 
@@ -277,7 +286,6 @@ class ProjectController extends Controller
      */
     private function fileIsAnImage($fileRealPath)
     {
-
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime = finfo_file($finfo, $fileRealPath);
         finfo_close($finfo);
@@ -454,8 +462,9 @@ class ProjectController extends Controller
     public function downloadFile(Request $request, Project $project, $directory, $filename)
     {
         $this->authorize($project);
+        Log::info('---Downloading---: ' . "app/resizedfiles/{$project->id}/{$directory}/download.zip as {$filename}");
 
-        return response()->download(storage_path("app/resizedfiles/{$project->id}/{$directory}/{$filename}"))->deleteFileAfterSend(true);
+        return response()->download(storage_path("app/resizedfiles/{$project->id}/{$directory}/download.zip", $filename))->deleteFileAfterSend(true);
     }
 
     public function getUploadedFile(Request $request, $directory, Project $project, $filename)
@@ -476,9 +485,9 @@ class ProjectController extends Controller
         $path = "projects/{$project->id}/";
         $path .= $request->type == 'upload' ? 'uploads/' : 'resized/';
         $file = $request->file;
-        if (Storage::delete($path.$file))
+        if (Storage::delete($path . $file))
         {
-            if($request->has('tn'))
+            if ($request->has('tn'))
             {
                 Storage::delete($path . $request->input('tn'));
             }
