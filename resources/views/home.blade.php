@@ -10,6 +10,9 @@
             <li role="presentation">
                 <a href="#projects" aria-controls="projects" role="tab" data-toggle="tab">Projects</a>
             </li>
+            <li role="presentation">
+                <a href="#plan" aria-controls="plan" role="tab" data-toggle="tab">Plan</a>
+            </li>
         </ul>
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="account">
@@ -18,7 +21,23 @@
             <div role="tabpanel" class="tab-pane" id="projects">
                 @include('projects.list')
             </div>
+            <div role="tabpanel" class="tab-pane" id="plan">
+                @include('account.changePlan')
+            </div>
         </div>
     </div>
 
 @endsection
+
+@section('scripts')
+    <script>
+        $('.plan-option').on('change', 'input[type=radio]', function () {
+            // TODO turn this on
+            // $('.plan-button').prop('disabled',false);
+            $('.plan-option').addClass('faded');
+            $(this).parents('.plan-option').removeClass('faded');
+        });
+    </script>
+@endsection
+
+

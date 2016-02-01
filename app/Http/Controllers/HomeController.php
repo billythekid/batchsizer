@@ -25,6 +25,8 @@ class HomeController extends Controller
     public function index()
     {
         $user = request()->user();
-        return view('home', compact('user'));
+        $invoices = $user->invoices();
+
+        return view('home', compact('user', 'invoices'));
     }
 }

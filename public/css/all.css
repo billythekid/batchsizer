@@ -1746,9 +1746,14 @@ body {
     background-repeat: no-repeat;
 }
 
+.faded {
+    opacity: .3;
+}
+
 .plan .panel-body > p:first-child {
     margin-right: 4em;
 }
+
 
 span.price {
     position: absolute;

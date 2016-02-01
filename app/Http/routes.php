@@ -16,6 +16,11 @@ use App\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Input;
 
+Route::post(
+    'stripe/webhook',
+    '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook'
+);
+
 Route::group(['middleware' => ['web']], function ()
 {
     Route::get('login', 'Auth\AuthController@showLoginForm')->name('login');
@@ -42,6 +47,7 @@ Route::group(['middleware' => ['web']], function ()
     {
         Route::resource('project', 'ProjectController');
         Route::post('account/update/{user}', 'Auth\AuthController@updateUser')->name('updateUser');
+        Route::post('plan/update/{user}', 'Auth\AuthController@updateUser')->name('changePlan');
         Route::post('resize/{project}', 'ProjectController@handleUploads')->name('projectResize');
 
         Route::get('download/{project}/{folder}/{file}', 'ProjectController@downloadFile')->name('downloadProjectZip');
@@ -49,12 +55,6 @@ Route::group(['middleware' => ['web']], function ()
 
         Route::delete('deleteFile/{project}', 'ProjectController@deleteFile')->name('deleteFile');
     });
-
-    Route::post(
-        'stripe/webhook',
-        '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook'
-    );
-
 
     Route::get('/', function ()
     {

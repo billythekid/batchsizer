@@ -1,5 +1,5 @@
 <div class="panel panel-info">
-    <div class="panel-heading">Account - ({{ ucfirst(Auth::user()->plan()) }} account)</div>
+    <div class="panel-heading">{{ $user->name }} account details</div>
 
     <div class="panel-body">
         @if(count($errors) > 0)
@@ -31,5 +31,21 @@
                 <button class="btn btn-primary form-control"><i class="fa fa-user"></i> Update Account Details</button>
             </div>
         </form>
+    </div>
+</div>
+
+
+<div class="panel panel-info">
+    <div class="panel-heading">Invoices</div>
+    <div class="panel-body">
+        <table>
+            @foreach ($invoices as $invoice)
+                <tr>
+                    <td>{{ $invoice->date()->toFormattedDateString() }}</td>
+                    <td>{{ $invoice->total() }}</td>
+                    <td><a href="/user/invoice/{{ $invoice->id }}">Download</a></td>
+                </tr>
+            @endforeach
+        </table>
     </div>
 </div>

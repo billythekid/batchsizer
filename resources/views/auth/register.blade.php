@@ -68,9 +68,22 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <div class="form-group{{ $errors->has('coupon') ? ' has-error' : '' }}">
+                                <label class="col-md-4 control-label">Discount Coupon?</label>
+
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="coupon">
+
+                                    @if ($errors->has('coupon'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('coupon') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
                             <span class="payment-errors"></span>
-
-
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Card Number:</label>
                                 <div class="col-md-6">

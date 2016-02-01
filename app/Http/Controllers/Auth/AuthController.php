@@ -74,30 +74,39 @@ class AuthController extends Controller
         Auth::guard($this->getGuard())->login($this->create($request->all()));
 
         $user = Auth::user();
-
         $token = $request->input('stripeToken');
-
+        $user->createAsStripeCustomer($token);
         if ($plan == 'project')
         {
-            $user->createAsStripeCustomer($token);
             if (!$user->charge('500', ['description' => 'Project Account Purchase']))
             {
                 $user->active = false;
                 $user->save();
             };
+
+            return redirect($this->redirectPath());
         }
 
-        if ($plan == 'freelancer')
+        try
         {
-            $user->newSubscription('freelancer', 'batchsizer-freelancer')->create($token);
+            $subscription = $user->newSubscription($plan, 'batchsizer-' . $plan);
+            if ($request->has('coupon'))
+            {
+                $subscription->withCoupon($request->input('coupon'));
+            }
+            $subscription->create($token);
         }
-
-        if ($plan == 'agency')
+        catch (Exception $e)
         {
-            $user->newSubscription('agency', 'batchsizer-agency')->create($token);
+            return back()->withError($e->getMessage());
         }
 
         return redirect($this->redirectPath());
+    }
+
+    public function changePlan(Request $request, User $user)
+    {
+
     }
 
 
@@ -120,6 +129,7 @@ class AuthController extends Controller
             $user->save();
         }
         alert()->success('Updated!', 'Your account has been updated');
+
         return redirect()->back();
     }
 
