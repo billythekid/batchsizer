@@ -127,12 +127,14 @@ class AuthController extends Controller
             'password' => 'confirmed|min:6',
         ]);
 
-        $user->update($request->all());
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
         if ($request->has('password'))
         {
             $user->password = bcrypt($request->input('password'));
-            $user->save();
         }
+        $user->save();
+
         alert()->success('Updated!', 'Your account has been updated');
 
         return redirect()->back();
