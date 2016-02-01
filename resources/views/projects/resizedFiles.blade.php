@@ -3,13 +3,23 @@
     <div class="panel-body">
         <div id="resized-project-files">
             @foreach($resizedZips as $file)
-                <?php $params = explode('/', $file); ?>
-                <div class="col-xs-4 col-sm-3 col-md-2 {{ str_slug($params[3]) }}">
-                    <i class="img-thumbnail icon-{{ str_slug($params[3]) }} fa-5x fa fa-file-archive-o"></i>
+                <?php
+                    $params = explode('/', $file);
+                    $filename = end($params);
+                ?>
+                <div class="col-xs-4 col-sm-3 col-md-2 {{ str_slug($filename) }}">
+                    <i class="img-thumbnail icon-{{ str_slug($filename) }} fa-5x fa fa-file-archive-o"></i>
                     <br>
                     <p>
-                        {{ $params[3] }}
+                        {{ $filename }}
                     </p>
+                    <form action="{{ route('deleteFile', $project) }}" method="post">
+                        {!! csrf_field() !!}
+                        {!! method_field('delete') !!}
+                        <input type="hidden" name="type" value="resized">
+                        <input type="hidden" name="file" value="{{ $filename }}">
+                        <button class="btn btn-danger btn-xs btn-block fa fa-trash"> Delete</button>
+                    </form>
                     <div class="clearfix"></div>
                 </div>
             @endforeach

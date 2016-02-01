@@ -451,7 +451,7 @@ class ProjectController extends Controller
         ];
     }
 
-    public function getDownload(Request $request, Project $project, $directory, $filename)
+    public function downloadFile(Request $request, Project $project, $directory, $filename)
     {
         $this->authorize($project);
 
@@ -463,5 +463,32 @@ class ProjectController extends Controller
         $this->authorize($project);
 
         return Image::make(Storage::get("{$directory}/{$project->id}/uploads/{$filename}"))->encode('data-url');
+    }
+
+    public function deleteFile(Request $request, Project $project)
+    {
+        $this->authorize($project);
+        $this->validate($request, [
+            'type' => 'required|in:upload,resized',
+            'file' => 'required',
+        ]);
+
+        $path = "projects/{$project->id}/";
+        $path .= $request->type == 'upload' ? 'uploads/' : 'resized/';
+        $file = $request->file;
+        if (Storage::delete($path.$file))
+        {
+            if($request->has('tn'))
+            {
+                Storage::delete($path . $request->input('tn'));
+            }
+            alert()->success('Success', "{$request->file} was deleted.");
+        } else
+        {
+            alert()->error('Oh Noes!', "{$request->file} was not deleted. Please try again.");
+        }
+
+        return redirect()->back();
+
     }
 }

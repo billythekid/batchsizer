@@ -44,8 +44,10 @@ Route::group(['middleware' => ['web']], function ()
         Route::post('account/update/{user}', 'Auth\AuthController@updateUser')->name('updateUser');
         Route::post('resize/{project}', 'ProjectController@handleUploads')->name('projectResize');
 
-        Route::get('download/{project}/{folder}/{file}', 'ProjectController@getDownload')->name('downloadProjectZip');
+        Route::get('download/{project}/{folder}/{file}', 'ProjectController@downloadFile')->name('downloadProjectZip');
         Route::get('file/{directory}/{project}/{filename}', 'ProjectController@getUploadedFile')->name('getUploadedFile');
+
+        Route::delete('deleteFile/{project}', 'ProjectController@deleteFile')->name('deleteFile');
     });
 
     Route::post(

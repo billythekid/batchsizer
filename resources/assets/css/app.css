@@ -95,6 +95,12 @@ span.price {
 #bb .slider-track-high {
     background: #8283FF;
 }
+
+.minimise-toggle {
+    cursor: pointer;
+}
+
+/*  credit card type toggle thing */
 div.card:before {
     font-family: FontAwesome;
 }

@@ -68,7 +68,24 @@ class ProjectPolicy
         return $project->members->contains($user);
     }
 
-    public function getDownload(User $user, Project $project)
+    /**
+     * A user must be part of teh project to get a file
+     * @param User    $user
+     * @param Project $project
+     * @return mixed
+     */
+    public function downloadFile(User $user, Project $project)
+    {
+        return $project->members->contains($user);
+    }
+
+    /**
+     * A user must be part of teh project to delete a file from storage
+     * @param User    $user
+     * @param Project $project
+     * @return mixed
+     */
+    public function deleteFile(User $user, Project $project)
     {
         return $project->members->contains($user);
     }
