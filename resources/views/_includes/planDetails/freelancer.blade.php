@@ -28,10 +28,11 @@
             --}}
             @if(Auth::guest())
                 <hr>
+                <a href="{{ route('signup','freelancer') }}" class="btn btn-block btn-primary">Get Freelancer
+                    Account</a>
                 {{--
-                <a href="{{ route('signup','freelancer') }}" class="btn btn-block btn-primary">Get Freelancer Account</a>
-                --}}
                 <button disabled class="btn btn-block btn-primary">Get Freelancer Account</button>
+                --}}
             @endif
         </div>
     </div>
