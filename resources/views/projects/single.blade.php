@@ -4,6 +4,7 @@
     @include('projects.ownerTools')
     @include('projects.emailAddress')
     @include('projects.uploader')
+    @include('projects.uploadedFiles')
     @include('projects.resizedFiles')
 @endsection
 

@@ -3774,4 +3774,9 @@ function showFeedbackForm() {
         feedbackForm.submit();
     });
 }
+
+$('.panel-heading').on('click', '.minimise-toggle', function(){
+    $(this).toggleClass('fa-compress fa-expand');
+    $(this).parent().next('.panel-body').toggleClass('hidden');
+});
 //# sourceMappingURL=all.js.map

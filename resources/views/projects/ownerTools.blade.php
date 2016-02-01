@@ -1,6 +1,6 @@
 @if($project->owner == Auth::user())
-    <div class="panel panel-default">
-        <div class="panel-heading">Project Owner's Tools</div>
+    <div class="panel panel-info">
+        <div class="panel-heading">Project Owner's Tools <i class="pull-right fa fa-compress minimise-toggle"></i></div>
         <div class="panel-body">
             <form action="{{ route('project.update', $project) }}" method="post">
                 {!! csrf_field() !!}

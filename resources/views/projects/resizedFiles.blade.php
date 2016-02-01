@@ -1,5 +1,5 @@
-<div class="panel panel-default">
-    <div class="panel-heading">Resized Batches</div>
+<div class="panel panel-info">
+    <div class="panel-heading">Resized Batches <i class="pull-right fa fa-compress minimise-toggle"></i></div>
     <div class="panel-body">
         <div id="resized-project-files">
             @foreach($resizedZips as $file)

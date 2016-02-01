@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-info">
     <div class="panel-heading">Projects</div>
     <div class="panel-body">
         @if (Auth::user()->plan() != 'project' || Auth::user()->projects()->count() == 0)
