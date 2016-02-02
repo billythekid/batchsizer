@@ -36,8 +36,13 @@ Route::group(['middleware' => ['web']], function ()
         Route::post('plan/update/{user}', 'Auth\AuthController@changePlan')->name('changePlan');
         Route::post('resize/{project}', 'ProjectController@handleUploads')->name('projectResize');
 
-        Route::post('download/{project}', 'ProjectController@downloadProjectFile')->name('downloadProjectFile');
+        // immediate download after resizing.
+        Route::get('download/{project}/{file}', 'ProjectController@downloadProjectZip')->name('downloadProjectZip');
+        // thumbnail generation.
         Route::get('file/{directory}/{project}/{filename}', 'ProjectController@getUploadedImage')->name('getUploadedImage');
+
+        // downloading a file that's saved on storage.
+        Route::post('getFile/{project}', 'ProjectController@downloadProjectFile')->name('downloadProjectFile');
 
         Route::delete('deleteFile/{project}', 'ProjectController@deleteFile')->name('deleteFile');
 
