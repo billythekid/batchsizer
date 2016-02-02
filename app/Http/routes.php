@@ -37,7 +37,7 @@ Route::group(['middleware' => ['web']], function ()
         Route::post('resize/{project}', 'ProjectController@handleUploads')->name('projectResize');
 
         // immediate download after resizing.
-        Route::get('download/{project}/{file}', 'ProjectController@downloadProjectZip')->name('downloadProjectZip');
+        Route::get('download/{project}/{directory}/{file}', 'ProjectController@downloadProjectZip')->name('downloadProjectZip');
         // thumbnail generation.
         Route::get('file/{directory}/{project}/{filename}', 'ProjectController@getUploadedImage')->name('getUploadedImage');
 

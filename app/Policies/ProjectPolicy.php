@@ -74,7 +74,7 @@ class ProjectPolicy
      * @param Project $project
      * @return mixed
      */
-    public function downloadFile(User $user, Project $project)
+    public function downloadProjectZip(User $user, Project $project)
     {
         return $project->members->contains($user);
     }
