@@ -13,6 +13,12 @@
                         <p class="zipname">
                             {{ $filename }}
                         </p>
+                        <form action="{{ route('downloadProjectFile', $project) }}" method="post">
+                            {!! csrf_field() !!}
+                            <input type="hidden" name="type" value="upload">
+                            <input type="hidden" name="file" value="{{ $filename }}">
+                            <button class="btn btn-success btn-sm btn-block fa fa-download"> Download</button>
+                        </form>
                         <form action="{{ route('deleteFile', $project) }}" method="post">
                             {!! csrf_field() !!}
                             {!! method_field('delete') !!}
@@ -27,6 +33,12 @@
                     @if(!str_contains($file,"/btk-tn-"))
                         <div class="col-xs-4 col-sm-3 col-md-2 btk-tn-{{ str_slug($filename) }} text-center">
                             <i class="icon-btk-tn-{{ str_slug($filename) }} fa-5x fa fa-circle-o-notch fa-spin"></i>
+                            <form action="{{ route('downloadProjectFile', $project) }}" method="post">
+                                {!! csrf_field() !!}
+                                <input type="hidden" name="type" value="upload">
+                                <input type="hidden" name="file" value="{{ $filename }}">
+                                <button class="btn btn-success btn-sm btn-block fa fa-download"> Download</button>
+                            </form>
                             <form action="{{ route('deleteFile', $project) }}" method="post">
                                 {!! csrf_field() !!}
                                 {!! method_field('delete') !!}
