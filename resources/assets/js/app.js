@@ -30,8 +30,7 @@ function showFeedbackForm() {
         animation: "slide-from-top",
         inputPlaceholder: "Write something"
     }, function (inputValue) {
-        if (inputValue === false)
-        {
+        if (inputValue === false) {
             return false;
         }
         if (inputValue === "") {
@@ -51,7 +50,34 @@ function showFeedbackForm() {
     });
 }
 
-$('.panel-heading').on('click', '.minimise-toggle', function(){
+$('.panel-heading').on('click', '.minimise-toggle', function () {
     $(this).toggleClass('fa-compress fa-expand');
     $(this).parent().next('.panel-body').toggleClass('hidden');
+    updateState('toggled-panels',$(this).parent().text());
 });
+
+function updateState(key, data) {
+    var storage = $.localStorage;
+    var currentData = [];
+    if (storage.isSet(key)) {
+        currentData = storage.get(key);
+    }
+    var found = currentData.indexOf(data);
+    if (found === -1) {
+        currentData.push(data);
+    } else {
+        currentData.splice(found, 1);
+    }
+    storage.set(key,currentData);
+}
+
+(function(){
+    storage = $.localStorage;
+    $('.panel-heading').each(function(){
+        if (storage.get('toggled-panels').indexOf($(this).text()) > -1)
+        {
+            $(this).next('.panel-body').addClass('hidden');
+            $(this).children('.minimise-toggle').toggleClass('fa-compress fa-expand');
+        }
+    });
+})();

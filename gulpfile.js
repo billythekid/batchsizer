@@ -25,6 +25,7 @@ elixir(function (mix) {
         .scripts([
             'jquery.min.js',
             'jquery.payment.js',
+            'jquery.storageapi.min.js',
             'bootstrap.min.js',
             'sweetalert.js',
             'dropzone.js',
