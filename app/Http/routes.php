@@ -23,39 +23,26 @@ Route::post(
 
 Route::group(['middleware' => ['web']], function ()
 {
-    Route::get('login', 'Auth\AuthController@showLoginForm')->name('login');
-    Route::post('login', 'Auth\AuthController@login');
-    Route::get('logout', 'Auth\AuthController@logout')->name('logout');
-
-    // Registration Routes...
-    Route::post('register/{plan}', 'Auth\AuthController@register')->name('register');
-
-    // Password Reset Routes...
-    Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
-    Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
-    Route::post('password/reset', 'Auth\PasswordController@reset');
-
-    Route::get('/home', 'HomeController@index');
-    Route::get('about', function ()
-    {
-        return view()->make('about');
-    })->name('about');
 
     Route::get('signup/{plan}', 'SignupController@showPlan')->middleware('guest')->name('signup');
 
     Route::group(['middleware' => ['auth']], function ()
     {
+        Route::get('/home', 'HomeController@index');
+        Route::get('logout', 'Auth\AuthController@logout')->name('logout');
+
         Route::resource('project', 'ProjectController');
         Route::post('account/update/{user}', 'Auth\AuthController@updateUser')->name('updateUser');
         Route::post('plan/update/{user}', 'Auth\AuthController@changePlan')->name('changePlan');
         Route::post('resize/{project}', 'ProjectController@handleUploads')->name('projectResize');
 
-        Route::get('download/{project}/{folder}/{file}', 'ProjectController@downloadFile')->name('downloadProjectZip');
-        Route::get('file/{directory}/{project}/{filename}', 'ProjectController@getUploadedFile')->name('getUploadedFile');
+        Route::post('download/{project}', 'ProjectController@downloadProjectFile')->name('downloadProjectFile');
+        Route::get('file/{directory}/{project}/{filename}', 'ProjectController@getUploadedImage')->name('getUploadedImage');
 
         Route::delete('deleteFile/{project}', 'ProjectController@deleteFile')->name('deleteFile');
 
-        Route::get('user/invoice/{invoice}', function ($invoiceId) {
+        Route::get('user/invoice/{invoice}', function ($invoiceId)
+        {
             return Auth::user()->downloadInvoice($invoiceId, [
                 'vendor'  => 'BatchSizer.co.uk',
                 'product' => 'Subscription',
@@ -64,15 +51,17 @@ Route::group(['middleware' => ['web']], function ()
 
     });
 
+
     Route::get('/', function ()
     {
         $channel = md5(str_random() . time());
 
         return view('index', compact('channel'));
     })->middleware('guest');
-    Route::post('batchsizer', 'ResizeController@resize')->name('batchsizer');
-
-    Route::get('batches/{batch}', 'ResizeController@serveBatch');
+    Route::get('about', function ()
+    {
+        return view()->make('about');
+    })->name('about');
 
     Route::post('feedback', function ()
     {
@@ -88,4 +77,13 @@ Route::group(['middleware' => ['web']], function ()
         return redirect()->back();
     })->name('feedback');
 
+    Route::get('login', 'Auth\AuthController@showLoginForm')->name('login');
+    Route::post('login', 'Auth\AuthController@login');
+    Route::post('register/{plan}', 'Auth\AuthController@register')->name('register');
+    Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+    Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+    Route::post('password/reset', 'Auth\PasswordController@reset');
+
+    Route::post('batchsizer', 'ResizeController@resize')->name('batchsizer');
+    Route::get('batches/{batch}', 'ResizeController@serveBatch');
 });

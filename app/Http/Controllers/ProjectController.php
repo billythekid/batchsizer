@@ -459,21 +459,45 @@ class ProjectController extends Controller
         ];
     }
 
+    /**
+     * This handles the immediate downloading of a file after resizing
+     *
+     * @param Request $request
+     * @param Project $project
+     * @param         $directory
+     * @param         $filename
+     * @return mixed
+     */
     public function downloadFile(Request $request, Project $project, $directory, $filename)
     {
         $this->authorize($project);
-        Log::info('---Downloading---: ' . "app/resizedfiles/{$project->id}/{$directory}/download.zip as {$filename}");
 
         return response()->download(storage_path("app/resizedfiles/{$project->id}/{$directory}/download.zip", $filename))->deleteFileAfterSend(true);
     }
 
-    public function getUploadedFile(Request $request, $directory, Project $project, $filename)
+    /**
+     * Returns an image's data-url from storage
+     *
+     * @param Request $request
+     * @param         $directory
+     * @param Project $project
+     * @param         $filename
+     * @return mixed
+     */
+    public function getUploadedImage(Request $request, $directory, Project $project, $filename)
     {
         $this->authorize($project);
 
         return Image::make(Storage::get("{$directory}/{$project->id}/uploads/{$filename}"))->encode('data-url');
     }
 
+    /**
+     * Removes a file from storage
+     *
+     * @param Request $request
+     * @param Project $project
+     * @return mixed
+     */
     public function deleteFile(Request $request, Project $project)
     {
         $this->authorize($project);
@@ -501,8 +525,25 @@ class ProjectController extends Controller
 
     }
 
-    public function downloadFromStorage(Request $request, $directory, Project $project, $filename)
+    /**
+     * Gets a file from storage and returns it to the browser for downloading
+     * @param Request $request
+     * @param Project $project
+     * @param         $filename
+     */
+    public function downloadProjectFile(Request $request, Project $project)
     {
         $this->authorize($project);
+        $this->validate($request, [
+            'type' => 'required|in:upload,resized',
+            'file' => 'required',
+        ]);
+        $path = "projects/{$project->id}/";
+        $path .= $request->type == 'upload' ? 'uploads/' : 'resized/';
+        $filename = $request->input('file');
+        $localpath = 'downloads/'.md5(str_random(23));
+        Storage::disk('local')->put($localpath, Storage::get($path . $filename));
+
+        return response()->download(storage_path('app/'.$localpath), $filename)->deleteFileAfterSend(true);
     }
 }

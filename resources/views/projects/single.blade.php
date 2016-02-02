@@ -74,7 +74,7 @@
 
     <script>
         @foreach($thumbnails as $thumbnail)
-        $.get('{{ route('getUploadedFile', [$thumbnail['directory'],$thumbnail['project'],$thumbnail['filename']]) }}')
+        $.get('{{ route('getUploadedImage', [$thumbnail['directory'],$thumbnail['project'],$thumbnail['filename']]) }}')
                 .success(function (data) {
                     $('#uploaded-project-files .icon-{{ str_slug($thumbnail['filename']) }}')
                             .after('<img class="{{ str_slug($thumbnail['filename']) }} img-thumbnail" src="' + data + '" alt="{{ $thumbnail['filename'] }}">')

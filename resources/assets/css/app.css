@@ -145,3 +145,8 @@ div.card:before {
 .identified + div.card > i {
     display: none;
 }
+
+.fix .fa-spin {
+    -webkit-transform-origin: 50% calc(50% - .5px);
+    transform-origin: 50% calc(50% - .5px);
+}

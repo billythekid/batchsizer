@@ -63,13 +63,13 @@ class ProjectPolicy
      * @param Project $project
      * @return mixed
      */
-    public function getUploadedFile(User $user, Project $project)
+    public function getUploadedImage(User $user, Project $project)
     {
         return $project->members->contains($user);
     }
 
     /**
-     * A user must be part of teh project to get a file
+     * A user must be part of the project to get a file after resizing
      * @param User    $user
      * @param Project $project
      * @return mixed
@@ -80,12 +80,23 @@ class ProjectPolicy
     }
 
     /**
-     * A user must be part of teh project to delete a file from storage
+     * A user must be part of the project to delete a file from storage
      * @param User    $user
      * @param Project $project
      * @return mixed
      */
     public function deleteFile(User $user, Project $project)
+    {
+        return $project->members->contains($user);
+    }
+
+    /**
+     * A user must be part of the project to download a file from storage
+     * @param User    $user
+     * @param Project $project
+     * @return mixed
+     */
+    public function downloadProjectFile(User $user, Project $project)
     {
         return $project->members->contains($user);
     }
