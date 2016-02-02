@@ -1,7 +1,7 @@
 <div class="col-md-4 plan">
     <div class="panel panel-warning">
         <div class="panel-heading">Freelancer Account <span
-                    class="price btn-warning"><strong>$10</strong>/month</span></div>
+                    class="price btn-warning"><strong>£10</strong>/month</span></div>
         <div class="panel-body">
             <p>Five Projects</p>
             <ul>

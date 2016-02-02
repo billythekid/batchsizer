@@ -1,6 +1,6 @@
 <div class="col-md-4 plan coming-soon">
     <div class="panel panel-success">
-        <div class="panel-heading">Agency Account <span class="price btn-success"><strong>$25</strong>/month</span>
+        <div class="panel-heading">Agency Account <span class="price btn-success"><strong>£25</strong>/month</span>
         </div>
         <div class="panel-body">
             <p>Unlimited Projects</p>

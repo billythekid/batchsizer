@@ -500,4 +500,9 @@ class ProjectController extends Controller
         return redirect()->back();
 
     }
+
+    public function downloadFromStorage(Request $request, $directory, Project $project, $filename)
+    {
+        $this->authorize($project);
+    }
 }
