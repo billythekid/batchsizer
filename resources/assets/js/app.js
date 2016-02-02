@@ -73,6 +73,9 @@ function updateState(key, data) {
 
 (function(){
     storage = $.localStorage;
+    if (! storage.isSet('toggled-panels')) {
+        return false;
+    }
     $('.panel-heading').each(function(){
         if (storage.get('toggled-panels').indexOf($(this).text()) > -1)
         {
