@@ -468,7 +468,7 @@ class ProjectController extends Controller
      * @param         $filename
      * @return mixed
      */
-    public function downloadFile(Request $request, Project $project, $directory, $filename)
+    public function downloadProjectZip(Request $request, Project $project, $directory, $filename)
     {
         $this->authorize($project);
 
