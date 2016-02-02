@@ -455,7 +455,7 @@ class ProjectController extends Controller
 
         return [
             'zip' => $zipFilePath,
-            'url' => route('downloadProjectZip', [$project, $randomString, $zipFileName]),
+            'url' => route('downloadProjectFile', [$project, $randomString, $zipFileName]),
         ];
     }
 
