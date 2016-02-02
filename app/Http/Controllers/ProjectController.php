@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CommonSize;
 use App\Project;
 use SplFileInfo;
 use App\Http\Requests;
@@ -118,8 +119,15 @@ class ProjectController extends Controller
                 'filename'  => end($thumbArray),
             ];
         }
-
-        return view()->make('projects.single', compact('project', 'channel', 'uploadedFiles', 'thumbnails', 'resizedZips'));
+        $commonSizes = CommonSize::orderBy('type')->get();
+        return view()->make('projects.single',
+            compact(
+                'project',
+                'channel',
+                'uploadedFiles',
+                'thumbnails',
+                'resizedZips',
+                'commonSizes'));
     }
 
 
@@ -327,7 +335,7 @@ class ProjectController extends Controller
         $randomString = str_random(10);
         $folder = storage_path("app/resizedfiles/{$project->id}/{$randomString}/");
 
-        $zipFileName = "BatchSizer-" . str_slug($project->name) . $sizesString;
+        $zipFileName = str_slug($project->name) . $sizesString;
         $zipFileName .= '-q' . $options['quality'];
         $zipFileName .= ($options['greyscale']) ? '-bw' : '';
         $rgb = false;
@@ -472,7 +480,7 @@ class ProjectController extends Controller
     {
         $this->authorize($project);
 
-        return response()->download(storage_path("app/resizedfiles/{$project->id}/{$directory}/download.zip", $filename))->deleteFileAfterSend(true);
+        return response()->download(storage_path("app/resizedfiles/{$project->id}/{$directory}/download.zip"), str_slug($filename))->deleteFileAfterSend(true);
     }
 
     /**

@@ -3,7 +3,7 @@
     <div class="panel-body">
         <div id="uploaded-project-files">
             @foreach($uploadedFiles as $file)
-                <?php 
+                <?php
                     $params = explode('/', $file);
                     $filename = end($params);
                 ?>

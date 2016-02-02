@@ -1754,7 +1754,6 @@ body {
     margin-right: 4em;
 }
 
-
 span.price {
     position: absolute;
     right: 0em;
@@ -1801,33 +1800,41 @@ span.price {
     background: #8283FF;
 }
 
-.minimise-toggle {
-    cursor: pointer;
+.minimise-toggle,
+.maximise-toggle {
+    cursor: pointer !important;
 }
 
 /*  credit card type toggle thing */
 div.card:before {
     font-family: FontAwesome;
 }
+
 .visa + div.card:before,
 .visaelectron + div.card:before {
     content: "\f1f0";
 }
+
 .mastercard + div.card:before {
     content: '\f1f1';
 }
+
 .amex + div.card:before {
     content: '\f1f3';
 }
+
 .dinersclub + div.card:before {
     content: '\f24c';
 }
+
 .discover + div.card:before {
     content: '\f1f2';
 }
+
 .unionpay + div.card:before {
     content: '\f20a';
 }
+
 .jcb + div.card:before {
     content: '\f24b';
 }
@@ -1835,9 +1842,11 @@ div.card:before {
 .maestro + div.card:before {
     content: '\f20a';
 }
+
 .forbrugsforeningen + div.card:before {
     content: '\f20a';
 }
+
 .dankort + div.card:before {
     content: '\f20a';
 }

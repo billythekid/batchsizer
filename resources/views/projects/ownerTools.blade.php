@@ -18,9 +18,9 @@
                 <div class="col-md-6">
                     <div class="col-sm-offset-1 checkbox checkbox-info">
                         <input class="styled" type="checkbox" name="save_uploads" id="save-uploads"@if($project->save_uploads) checked @endif>
-                        <label id="responsive-label" for="save-uploads">Save Uploads?</label><br>
+                        <label id="save-uploads-label" for="save-uploads">Save Uploads?</label><br>
                         <input class="styled" type="checkbox" name="save_resized_zips" id="save-resized"@if($project->save_resized_zips) checked @endif>
-                        <label id="noupscale-label" for="save-resized">Save Resized Zip Files?</label>
+                        <label id="save-resized-label" for="save-resized">Save Resized Zip Files?</label>
 
                     </div>
                 </div>

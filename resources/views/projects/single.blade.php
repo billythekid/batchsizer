@@ -89,5 +89,22 @@
             this.checked ? target.show() : target.hide();
         });
     </script>
+    <script>
+        $('#common-sizes').change(function () {
+            var val = $(this).val();
+            if (val.length > 0) {
+                var input = $('#dimensions');
+                var dimensions = input.val().trim();
+                while (dimensions.endsWith(",")) {
+                    dimensions = dimensions.slice(0, -1).trim();
+                }
+                if (dimensions.length > 0) {
+                    val = ', ' + val;
+                }
+                input.val(dimensions + val);
+            }
+        });
+    </script>
+
 
 @endsection

@@ -3780,11 +3780,12 @@ function showFeedbackForm() {
     });
 }
 
-$('.panel-heading').on('click', '.minimise-toggle', function () {
+$('.panel-heading').on('click', '.minimise-toggle,.maximise-toggle', function () {
     $(this).toggleClass('fa-compress fa-expand');
     $(this).parent().next('.panel-body').toggleClass('hidden');
     updateState('toggled-panels',$(this).parent().text());
 });
+
 
 function updateState(key, data) {
     var storage = $.localStorage;
@@ -3809,8 +3810,8 @@ function updateState(key, data) {
     $('.panel-heading').each(function(){
         if (storage.get('toggled-panels').indexOf($(this).text()) > -1)
         {
-            $(this).next('.panel-body').addClass('hidden');
-            $(this).children('.minimise-toggle').toggleClass('fa-compress fa-expand');
+            $(this).next('.panel-body').toggleClass('hidden');
+            $(this).children('.minimise-toggle,.maximise-toggle').toggleClass('fa-compress fa-expand');
         }
     });
 })();
