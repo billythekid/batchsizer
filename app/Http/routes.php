@@ -71,9 +71,10 @@ Route::group(['middleware' => ['web']], function ()
     Route::post('feedback', function ()
     {
         $feedback = request()->get('feedback');
-        Mail::send('emails.feedback', compact('feedback'), function ($message)
+        $user = (Auth::check()) ? Auth::user()->name . "(".Auth::user()->id.")" : "Anonymous";
+        Mail::send('emails.feedback', compact('feedback'), function ($message) use ($user)
         {
-            $message->subject('New feedback from BatchSizer');
+            $message->subject('BatchSizer Feedback from '. $user);
             $message->from('noreply@batchsizer.co.uk', 'BatchSizer');
             $message->to('billy@the-kid.org');
         });
