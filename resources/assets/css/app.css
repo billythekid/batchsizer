@@ -75,10 +75,14 @@ span.price {
     display: none !important;
 }
 
-#uploaded-project-files div {
-    height: 12em;
+#uploaded-project-files div,
+#resized-project-files div {
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+#uploaded-project-files div {
+    height: 12em;
 }
 
 #colourizehint {

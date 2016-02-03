@@ -27,7 +27,7 @@
                             $(".dz-message").html("Thanks. Your images will show below when saved to our secure server.<br>Drop zips or images from your device here")
                         @endif
                         if (response.url) {
-                            $('#ajax-download').attr('src',response.url);
+                            $('#ajax-download').attr('src', response.url);
                         }
                     } else if (response.status == 'error') {
                         swal({
@@ -87,6 +87,17 @@
         $('#download').change(function () {
             var target = $('.progress');
             this.checked ? target.show() : target.hide();
+        });
+        $('#responsive').change(function () {
+            var target = $('#aspectratio')[0];
+            if (this.checked) {
+                target.checked = true;
+            }
+        });
+        $('#aspectratio').change(function () {
+            if ($('#responsive')[0].checked) {
+                this.checked = true;
+            }
         });
     </script>
     <script>

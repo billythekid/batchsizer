@@ -33,7 +33,7 @@
                                 <div class="clearfix"></div>
                                 <div class="checkbox checkbox-info">
                                     <input class="styled" type="checkbox" name="responsive" id="responsive" checked>
-                                    <label id="responsive-label" for="responsive">Responsive?</label><br>
+                                    <label id="responsive-label" for="responsive">Responsive? <small>(ignore heights and maintain aspect ratio)</small></label><br>
                                     <input class="styled" type="checkbox" name="noupscale" id="noupscale" checked>
                                     <label id="noupscale-label" for="noupscale">Prevent upscaling?</label><br>
                                     <input class="styled" type="checkbox" name="aspectratio" id="aspectratio" checked>
