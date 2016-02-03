@@ -27,7 +27,7 @@
                             $(".dz-message").html("Thanks. Your images will show below when saved to our secure server.<br>Drop zips or images from your device here")
                         @endif
                         if (response.url) {
-                            window.location = response.url;
+                            $('#ajax-download').attr('src',response.url);
                         }
                     } else if (response.status == 'error') {
                         swal({

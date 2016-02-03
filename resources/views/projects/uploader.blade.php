@@ -1,3 +1,5 @@
+@include('_includes.progress')
+<iframe id="ajax-download" style="display:none"></iframe>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-info">
@@ -107,4 +109,3 @@
     </div>
 
 </div>
-@include('_includes.progress')
