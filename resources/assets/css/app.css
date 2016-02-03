@@ -159,3 +159,7 @@ div.card:before {
     -webkit-transform-origin: 50% calc(50% - .5px);
     transform-origin: 50% calc(50% - .5px);
 }
+
+.archivezip .fa-4x {
+    height: 77px;
+}
