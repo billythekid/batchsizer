@@ -76,7 +76,7 @@ class ProjectController extends Controller
         $request->user()->projects()->save($project);
         alert()->success('Success', "{$request->name} successfully created");
 
-        return redirect()->back();
+        return redirect()->route('project.show', $project);
     }
 
     /**
@@ -515,18 +515,20 @@ class ProjectController extends Controller
         ]);
 
         $path = "projects/{$project->id}/";
-        $path .= $request->type == 'upload' ? 'uploads/' : 'resized/';
-        $file = $request->file;
+        $path .= $request->input('type') == 'upload' ? 'uploads/' : 'resized/';
+        $file = basename($request->input('file'));
+
         if (Storage::delete($path . $file))
         {
             if ($request->has('tn'))
             {
-                Storage::delete($path . $request->input('tn'));
+                $tn = basename($request->input('tn'));
+                Storage::delete($path . $tn);
             }
-            alert()->success('Success', "{$request->file} was deleted.");
+            alert()->success('Success', "{$file} was deleted.");
         } else
         {
-            alert()->error('Oh Noes!', "{$request->file} was not deleted. Please try again.");
+            alert()->error('Oh Noes!', "{$file} was not deleted. Please try again.");
         }
 
         return redirect()->back();
@@ -548,10 +550,30 @@ class ProjectController extends Controller
         ]);
         $path = "projects/{$project->id}/";
         $path .= $request->type == 'upload' ? 'uploads/' : 'resized/';
-        $filename = $request->input('file');
+        $filename = basename($request->input('file'));
         $localpath = 'downloads/'.md5(str_random(23));
         Storage::disk('local')->put($localpath, Storage::get($path . $filename));
 
         return response()->download(storage_path('app/'.$localpath), $filename)->deleteFileAfterSend(true);
     }
+
+    public function renameProjectFile(Request $request, Project $project)
+    {
+        $this->authorize($project);
+        $this->validate($request, [
+            'type' => 'required|in:upload,resized',
+            'oldfilename' => 'required',
+            'file' => 'required',
+        ]);
+        $path = "projects/{$project->id}/";
+        $path .= $request->type == 'upload' ? 'uploads/' : 'resized/';
+        $oldFileName = basename($request->input('oldfilename'));
+        $newFileName = basename($request->input('file'));
+        $newFileName .= (ends_with($newFileName,'.zip')) ? '' : '.zip';
+        Storage::move($path.$oldFileName, $path.$newFileName);
+        alert()->success('Success', "{$oldFileName} was renamed to {$newFileName}.");
+
+        return redirect()->back();
+    }
+
 }

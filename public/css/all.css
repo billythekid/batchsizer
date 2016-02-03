@@ -1776,7 +1776,7 @@ span.price {
 }
 
 #uploaded-project-files div {
-    margin-bottom: 1em;
+    height: 12em;
     text-overflow: ellipsis;
     overflow: hidden;
 }

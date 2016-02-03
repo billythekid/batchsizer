@@ -101,5 +101,15 @@ class ProjectPolicy
         return $project->members->contains($user);
     }
 
-
+    /**
+     * A user must be part of the project to rename a file
+     * The owner of the project must not be on the lowest plan
+     * @param User    $user
+     * @param Project $project
+     * @return mixed
+     */
+    public function renameProjectFile(User $user, Project $project)
+    {
+        return $project->members->contains($user) && $project->owner->plan != 'project';
+    }
 }

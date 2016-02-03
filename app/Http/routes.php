@@ -41,9 +41,9 @@ Route::group(['middleware' => ['web']], function ()
         // thumbnail generation.
         Route::get('file/{directory}/{project}/{filename}', 'ProjectController@getUploadedImage')->name('getUploadedImage');
 
-        // downloading a file that's saved on storage.
+        // files saved on storage.
+        Route::post('renameFile/{project}', 'ProjectController@renameProjectFile')->name('renameProjectFile');
         Route::post('getFile/{project}', 'ProjectController@downloadProjectFile')->name('downloadProjectFile');
-
         Route::delete('deleteFile/{project}', 'ProjectController@deleteFile')->name('deleteFile');
 
         Route::get('user/invoice/{invoice}', function ($invoiceId)

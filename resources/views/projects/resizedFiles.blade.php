@@ -11,20 +11,30 @@
                     <i class="img-thumbnail icon-{{ str_slug($filename) }} fa-5x fa fa-file-archive-o"></i>
                     <br>
                     <p>
-                    {{ $filename }}
+                        @if($project->owner->plan == 'project')
+                            {{ $filename }}
+                        @else
+                        <form action="{{ route('renameProjectFile', $project) }}" method="post">
+                            {!! csrf_field() !!}
+                            <input type="hidden" name="type" value="resized">
+                            <input type="hidden" name="oldfilename" value="{{ $filename }}">
+                            <input type="text" class="form-control" name="file" value="{{ $filename }}">
+                            <button class="btn btn-success btn-sm btn-block fa fa-pencil"> <span class="hidden-xs">Rename</span></button>
+                        </form>
+                        @endif
                     </p>
                     <form action="{{ route('downloadProjectFile', $project) }}" method="post">
                         {!! csrf_field() !!}
                         <input type="hidden" name="type" value="resized">
                         <input type="hidden" name="file" value="{{ $filename }}">
-                        <button class="btn btn-success btn-sm btn-block fa fa-download"> Download</button>
+                        <button class="btn btn-success btn-sm btn-block fa fa-download"> <span class="hidden-xs">Download</span></button>
                     </form>
                     <form action="{{ route('deleteFile', $project) }}" method="post">
                         {!! csrf_field() !!}
                         {!! method_field('delete') !!}
                         <input type="hidden" name="type" value="resized">
                         <input type="hidden" name="file" value="{{ $filename }}">
-                        <button class="btn btn-danger btn-xs btn-block fa fa-trash"> Delete</button>
+                        <button class="btn btn-danger btn-xs btn-block fa fa-trash"> <span class="hidden-xs">Delete</span></button>
                     </form>
                     <div class="clearfix"></div>
                 </div>
