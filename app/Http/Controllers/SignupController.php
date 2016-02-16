@@ -15,7 +15,7 @@ class SignupController extends Controller
     {
         if (App::environment() != 'local')
         {
-            if (!in_array($plan, ['project', 'freelancer']))
+            if (!in_array($plan, ['project', 'freelancer', 'agency']))
             {
                 abort(404);
             }
