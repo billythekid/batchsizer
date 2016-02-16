@@ -44,7 +44,7 @@
                                     @endif
                                     <hr class="invisible">
                                     <input class="styled" type="checkbox" name="greyscale" id="greyscale">
-                                    <label id="greyscale-label" for="greyscale">Black &amp; White images?</label>
+                                    <label id="greyscale-label" for="greyscale">Greyscale images?</label>
                                 </div>
                             </div>
                             <div class="col-sm-4">

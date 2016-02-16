@@ -631,9 +631,27 @@ class ProjectController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Resize images by email upload. Emails are sent using this method.
+     * @param Request $request
+     * @return string
+     */
     public function resizeByEmail(Request $request)
     {
-        Log::info($request->all());
+        $email = EmailUploadAddress::where('email',$request->input('recipient'));
+        $project = $email->project;
+        $user = $email->user;
+        $reply_to = $request->input('sender');
+        $uploadCount = $request->input('attachment-count'); //use this for grabbing the attachments
+        $greyscale = str_contains($request->input('subject'),['grey','gray']);
+        $sizes = explode(',',$request->input('subject'));
+        $attachments = [];
+        foreach(range(1,$uploadCount) as $index)
+        {
+            $attachments[] = $request->input('attachment-'.$index);
+        }
+        Log::info($attachments);
+        return 'Thanks MailGun!';
     }
 
 }
