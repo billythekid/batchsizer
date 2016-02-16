@@ -616,10 +616,10 @@ class ProjectController extends Controller
 
         $emailUploadAddress = EmailUploadAddress::firstOrCreate(['project_id' => $project->id, 'user_id' => $request->user()->id]);
         $faker = Factory::create();
-        $email = $faker->userName . "@batchsizer.co.uk";
+        $email = $faker->userName . "@mg.batchsizer.co.uk";
         while (!empty(EmailUploadAddress::where('email', $email)->first()))
         {
-            $email = $faker->userName . "@batchsizer.co.uk";
+            $email = $faker->userName . "@mg.batchsizer.co.uk";
         }
         $emailUploadAddress->email = $email;
         $emailUploadAddress->save();

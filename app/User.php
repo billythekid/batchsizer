@@ -92,10 +92,10 @@ class User extends Authenticatable
         if (empty($emailUploadAddress->email))
         {
             $faker = Factory::create();
-            $email = $faker->userName . "@batchsizer.co.uk";
+            $email = $faker->userName . "@mg.batchsizer.co.uk";
             while (!empty(EmailUploadAddress::where('email', $email)->first()))
             {
-                $email = $faker->userName . "@batchsizer.co.uk";
+                $email = $faker->userName . "@mg.batchsizer.co.uk";
             }
             $emailUploadAddress->email = $email;
             $emailUploadAddress->save();
