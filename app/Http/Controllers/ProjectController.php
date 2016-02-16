@@ -642,7 +642,7 @@ class ProjectController extends Controller
         $project = $email->project;
         $user = $email->user;
         $reply_to = $request->input('sender');
-        $uploadCount = $request->input('attachment-count'); //use this for grabbing the attachments
+        $uploadCount = (int) $request->input('attachment-count'); //use this for grabbing the attachments
         $greyscale = str_contains($request->input('subject'),['grey','gray']);
         $sizes = explode(',',$request->input('subject'));
         $attachments = [];
@@ -650,7 +650,7 @@ class ProjectController extends Controller
         {
             $attachments[] = $request->input('attachment-'.$index);
         }
-        Log::info($attachments);
+        Log::info(collect($attachments));
         return 'Thanks MailGun!';
     }
 
