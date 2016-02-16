@@ -638,7 +638,7 @@ class ProjectController extends Controller
      */
     public function resizeByEmail(Request $request)
     {
-        $email = EmailUploadAddress::where('email',$request->input('recipient'));
+        $email = EmailUploadAddress::where('email',$request->input('recipient'))->first();
         $project = $email->project;
         $user = $email->user;
         $reply_to = $request->input('sender');
