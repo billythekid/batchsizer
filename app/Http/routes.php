@@ -23,7 +23,7 @@ Route::post(
 
 Route::post(
     'emailResize',
-    'ResizeController@resizeByEmail'
+    'ProjectController@resizeByEmail'
 );
 
 Route::group(['middleware' => ['web']], function ()
@@ -50,6 +50,7 @@ Route::group(['middleware' => ['web']], function ()
         Route::post('account/update/{user}', 'Auth\AuthController@updateUser')->name('updateUser');
         Route::post('plan/update/{user}', 'Auth\AuthController@changePlan')->name('changePlan');
         Route::post('resize/{project}', 'ProjectController@handleUploads')->name('projectResize');
+        Route::post('project/{project}/email', 'ProjectController@refreshEmailAddress')->name('refreshEmailUploadAddress');
 
         // immediate download after resizing.
         Route::get('download/{project}/{directory}/{file}', 'ProjectController@downloadProjectZip')->name('downloadProjectZip');

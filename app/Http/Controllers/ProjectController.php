@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Project;
 use App\User;
-use Illuminate\Support\Facades\DB;
+use App\Project;
 use SplFileInfo;
+use Faker\Factory;
 use App\CommonSize;
 use App\Http\Requests;
 use App\Jobs\ResizeFile;
+use App\EmailUploadAddress;
 use Illuminate\Http\Request;
 use Aws\S3\Exception\S3Exception;
+use Illuminate\Support\Facades\DB;
 use Chumper\Zipper\Facades\Zipper;
 use App\Events\FileBeingProcessed;
 use App\Jobs\SaveFileToFilesystem;
@@ -167,7 +169,7 @@ class ProjectController extends Controller
         {
             foreach ($request->input('members') as $memberID)
             {
-                if($request->user()->allTeamMembers()->has(User::find($memberID)->email))
+                if ($request->user()->allTeamMembers()->has(User::find($memberID)->email))
                 {
                     $project->members()->attach($memberID);
                 }
@@ -605,6 +607,33 @@ class ProjectController extends Controller
         alert()->success('Success', "{$oldFileName} was renamed to {$newFileName}.");
 
         return redirect()->back();
+    }
+
+
+    public function refreshEmailAddress(Request $request, Project $project)
+    {
+        $this->authorize($project);
+
+        $emailUploadAddress = EmailUploadAddress::firstOrCreate(['project_id' => $project->id, 'user_id' => $request->user()->id]);
+        $faker = Factory::create();
+        $email = $faker->userName . "@batchsizer.co.uk";
+        while (!empty(EmailUploadAddress::where('email', $email)->first()))
+        {
+            $email = $faker->userName . "@batchsizer.co.uk";
+        }
+        $emailUploadAddress->email = $email;
+        $emailUploadAddress->save();
+
+        if($request->ajax())
+        {
+            return $emailUploadAddress;
+        }
+        return redirect()->back();
+    }
+
+    public function resizeByEmail(Request $request)
+    {
+        Log::info($request->all());
     }
 
 }

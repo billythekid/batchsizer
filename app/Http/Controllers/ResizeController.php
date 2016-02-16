@@ -197,8 +197,4 @@ class ResizeController extends Controller
         return 10; //not logged in
     }
 
-    public function resizeByEmail(Request $request)
-    {
-        Log::info($request->all());
-    }
 }

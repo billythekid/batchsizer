@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Faker\Factory;
 use Laravel\Cashier\Billable;
 use Illuminate\Support\Collection;
 use Mpociot\Teamwork\Traits\UserHasTeams;
@@ -81,9 +82,26 @@ class User extends Authenticatable
                 $users = $users->merge([$user->email => $user]);
             }
         }
+
         return $users;
     }
 
+    public function emailUploadAddress(Project $project)
+    {
+        $emailUploadAddress = EmailUploadAddress::firstOrCreate(['project_id' => $project->id, 'user_id' => $this->id]);
+        if (empty($emailUploadAddress->email))
+        {
+            $faker = Factory::create();
+            $email = $faker->userName . "@batchsizer.co.uk";
+            while (!empty(EmailUploadAddress::where('email', $email)->first()))
+            {
+                $email = $faker->userName . "@batchsizer.co.uk";
+            }
+            $emailUploadAddress->email = $email;
+            $emailUploadAddress->save();
+        }
+        return $emailUploadAddress;
+    }
 
 
 }

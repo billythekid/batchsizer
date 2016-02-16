@@ -112,4 +112,16 @@ class ProjectPolicy
     {
         return $project->members->contains($user) && $project->owner->plan != 'project';
     }
+
+    /**
+     * A user must be part of a project to be able to change their email upload address
+     * @param User    $user
+     * @param Project $project
+     * @return mixed
+     */
+    public function refreshEmailAddress(User $user, Project $project)
+    {
+        return $project->members->contains($user);
+
+    }
 }

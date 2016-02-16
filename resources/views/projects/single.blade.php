@@ -43,9 +43,7 @@
                 });
             }
         });
-    </script>
 
-    <script>
         function bgrgb() {
             var r = (parseInt($("#red").val()) + 100) / 2;
             var g = (parseInt($("#green").val()) + 100) / 2;
@@ -70,9 +68,7 @@
          $('#colourizehint').css('box-shadow', '0 0 ' + $(this).val() + 'px black inset');
          });
          */
-    </script>
 
-    <script>
         @foreach($thumbnails as $thumbnail)
         $.get('{{ route('getUploadedImage', [$thumbnail['directory'],$thumbnail['project'],$thumbnail['filename']]) }}')
                 .success(function (data) {
@@ -81,9 +77,7 @@
                             .remove();
                 });
         @endforeach
-    </script>
 
-    <script>
         $('#download').change(function () {
             var target = $('.progress');
             this.checked ? target.show() : target.hide();
@@ -99,8 +93,7 @@
                 this.checked = true;
             }
         });
-    </script>
-    <script>
+
         $('#common-sizes').change(function () {
             var val = $(this).val();
             if (val.length > 0) {
@@ -115,7 +108,14 @@
                 input.val(dimensions + val);
             }
         });
+
+        $('#email-uploader-refresh-form').on('submit', function (event) {
+            event.preventDefault();
+            $.post($(this).attr('action'),$(this).serialize())
+                    .success(function (data) {
+                        $('#email-uploader-refresh-address').val(data.email)
+                    })
+        });
+
     </script>
-
-
 @endsection
