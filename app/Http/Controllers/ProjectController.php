@@ -21,6 +21,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProjectController extends Controller
 {
@@ -648,7 +649,7 @@ class ProjectController extends Controller
         $attachments = [];
         foreach(range(1,$uploadCount) as $index)
         {
-            $attachments[] = $request->input('attachment-'.$index);
+            $attachments[] = $request->file('attachment-'.$index)->getClientOriginalName();
         }
         Log::info(collect($attachments));
         return 'Thanks MailGun!';
