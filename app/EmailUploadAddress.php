@@ -8,7 +8,7 @@ class EmailUploadAddress extends Model
 {
     protected $fillable = ['email','user_id','project_id'];
 
-    protected $visible = ['email'];
+    protected $visible = ['email', 'project', 'user'];
 
     public function user()
     {
