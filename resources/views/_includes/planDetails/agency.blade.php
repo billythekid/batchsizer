@@ -32,13 +32,12 @@
                 <li>Assign projects on a per-team basis</li>
                 <li>Give individual members access to your project(s)</li>
             </ul>
-            @if(Auth::guest())
                 <hr>
-
+{{--
                     <a href="{{ route('signup','agency') }}" class="btn btn-block btn-primary">Get Agency Account</a>
+                    --}}
 
                 <button disabled class="btn btn-block btn-primary">Get Agency Account</button>
-            @endif
         </div>
     </div>
 </div>
