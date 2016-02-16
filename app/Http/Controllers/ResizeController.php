@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use Log;
 
 
 class ResizeController extends Controller
@@ -193,8 +194,11 @@ class ResizeController extends Controller
         {
             return 25;
         }
-
         return 10; //not logged in
+    }
 
+    public function resizeByEmail(Request $request)
+    {
+        Log::info($request->all());
     }
 }

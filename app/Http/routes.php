@@ -21,6 +21,11 @@ Route::post(
     '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook'
 );
 
+Route::post(
+    'emailResize',
+    'ResizeController@resizeByEmail'
+);
+
 Route::group(['middleware' => ['web']], function ()
 {
 
