@@ -1,7 +1,7 @@
 <div class="col-md-4 plan">
     <div class="panel panel-danger">
         <div class="panel-heading">Project Access <span
-                    class="price btn-danger"><strong>£5</strong>/project</span></div>
+                    class="price btn-danger"><strong>£3</strong>/project</span></div>
         <div class="panel-body">
             <p>No re-billing, just a one-off fee</p>
             <ul>

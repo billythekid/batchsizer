@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-use Validator;
 use Illuminate\Http\Request;
 use Laravel\Cashier\Billable;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -98,7 +98,7 @@ class AuthController extends Controller
 
         try
         {
-            $subscription = $user->newSubscription($plan, 'batchsizer-' . $plan)->create($token);
+            $user->newSubscription($plan, 'batchsizer-' . $plan)->create($token);
         }
         catch (Exception $e)
         {
@@ -121,11 +121,20 @@ class AuthController extends Controller
         {
             abort(403);
         }
-        $this->validate($request, [
+
+        $validator = Validator::make($request->all(), [
             'name'     => 'max:255',
             'email'    => "email|max:255|unique:users,email,{$user->id}",
             'password' => 'confirmed|min:6',
         ]);
+        if ($validator->fails())
+        {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('tab', 'account');
+        }
 
         $user->name = $request->input('name');
         $user->email = $request->input('email');
@@ -137,7 +146,7 @@ class AuthController extends Controller
 
         alert()->success('Updated!', 'Your account has been updated');
 
-        return redirect()->back();
+        return redirect()->back()->with('tab','account');
     }
 
     /**

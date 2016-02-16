@@ -124,16 +124,6 @@
                                     </label>
                                 </div>
                             </div>
-                            {{--
-                            <script
-                                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                    data-key="{{ env('STRIPE_KEY') }}"
-                                    data-amount="{{ $price['amount'] }}"
-                                    data-name="{{ $plan }}"
-                                    data-description="{{ $plan }} Subscription ({{ $price['human'] }})"
-                                    data-locale="auto">
-                            </script>
-                            --}}
                         </form>
                     </div>
                 </div>

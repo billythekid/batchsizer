@@ -167,3 +167,7 @@ div.card:before {
 .archivezip .fa-4x {
     height: 77px;
 }
+
+i.handle {
+    cursor: move;
+}

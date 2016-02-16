@@ -25,11 +25,21 @@ Route::group(['middleware' => ['web']], function ()
 {
 
     Route::get('signup/{plan}', 'SignupController@showPlan')->middleware('guest')->name('signup');
+    Route::get('invite/thanks', function(){
+        return view('teams.inviteDenied');
+    })->name('inviteDenied');
+    Route::get('invite/{token}', 'TeamController@handleInvite')->name('handleInvite');
+
 
     Route::group(['middleware' => ['auth']], function ()
     {
-        Route::get('/home', 'HomeController@index');
-        Route::get('logout', 'Auth\AuthController@logout')->name('logout');
+        Route::get('/home', 'HomeController@index')->name('home');
+
+        Route::post('invite-user', 'SignupController@inviteUser')->name('inviteUser');
+        Route::resource('team', 'TeamController');
+        Route::post('team/invite/{team}', 'TeamController@invite')->name('team.invite');
+        Route::get('team/addMember/{team}', 'TeamController@addMember')->name('addTeamMember');
+        Route::get('team/removeMember/{team}', 'TeamController@removeMember')->name('removeTeamMember');
 
         Route::resource('project', 'ProjectController');
         Route::post('account/update/{user}', 'Auth\AuthController@updateUser')->name('updateUser');
@@ -85,6 +95,7 @@ Route::group(['middleware' => ['web']], function ()
 
     Route::get('login', 'Auth\AuthController@showLoginForm')->name('login');
     Route::post('login', 'Auth\AuthController@login');
+    Route::get('logout', 'Auth\AuthController@logout')->name('logout');
     Route::post('register/{plan}', 'Auth\AuthController@register')->name('register');
     Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
     Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');

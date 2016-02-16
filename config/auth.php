@@ -2,6 +2,10 @@
 
 return [
 
+    // hack for teamwork
+
+    'model' => App\User::class,
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "929fce91bb2861c67ed5e079189b22db",
-    "content-hash": "9268c5f7ea400be5e74c2863ef5e6021",
+    "hash": "aa050903e84c03e7564152c4b69e760f",
+    "content-hash": "221bc94e729cab44182ee8cb195a5c26",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1232,6 +1232,54 @@
                 "psr-3"
             ],
             "time": "2015-10-14 12:51:02"
+        },
+        {
+            "name": "mpociot/teamwork",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mpociot/teamwork.git",
+                "reference": "03cc3255ce06aa3f57d68ba8cb7c65bd9ac8eaf0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mpociot/teamwork/zipball/03cc3255ce06aa3f57d68ba8cb7c65bd9ac8eaf0",
+                "reference": "03cc3255ce06aa3f57d68ba8cb7c65bd9ac8eaf0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "illuminate/database": "~5.0",
+                "mockery/mockery": "dev-master",
+                "phpunit/phpunit": "~4.1",
+                "sami/sami": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Mpociot\\Teamwork": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marcel Pociot",
+                    "email": "m.pociot@gmail.com"
+                }
+            ],
+            "description": "User to Team associations for the Laravel 5 Framework",
+            "homepage": "http://github.com/mpociot/teamwork",
+            "keywords": [
+                "Invite",
+                "Teams"
+            ],
+            "time": "2016-02-02 22:18:29"
         },
         {
             "name": "mtdowling/cron-expression",

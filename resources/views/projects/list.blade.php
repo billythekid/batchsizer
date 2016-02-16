@@ -1,17 +1,24 @@
 <div class="panel panel-info">
     <div class="panel-heading">Projects</div>
     <div class="panel-body">
-        @if (Auth::user()->plan() != 'project' || Auth::user()->projects()->count() == 0)
+        @if($user->plan == 'team')
+            You are currently on a team invite account. You can upgrade your plan to create your own projects by clicking the "Plan" tab above.
+        @elseif(Auth::user()->plan() != 'project' || Auth::user()->projects()->count() == 0)
             <h3>Add New Project</h3>
             <form action="{{ route('project.store') }}" method="post">
                 {!! csrf_field() !!}
                 <div class="form-group">
-                    <label for="name">Project Name:</label>
-                    <input type="text" name="name" id="name" class="form-control"
-                           value="{{ old('name') }}">
+                    <label for="projectname">Project Name:</label>
+                    <input type="text" name="projectname" id="projectname"
+                           class="form-control{{ $errors->has('projectname') ? ' has-error' : '' }}"
+                           value="{{ old('projectname') }}">
+                    @if ($errors->has('projectname'))
+                        <span class="help-block"><strong>{{ $errors->first('projectname') }}</strong></span>
+                    @endif
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary form-control"><i class="fa fa-plus-square"></i> Create Project</button>
+                    <button class="btn btn-primary form-control"><i class="fa fa-plus-square"></i> Create Project
+                    </button>
                 </div>
             </form>
             <hr>

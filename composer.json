@@ -19,7 +19,8 @@
     "infinety/sweetalert": "dev-master",
     "laravel/cashier": "^6.0",
     "league/flysystem-aws-s3-v3": "^1.0",
-    "dompdf/dompdf": "^0.6.2"
+    "dompdf/dompdf": "^0.6.2",
+    "mpociot/teamwork": "^2.0"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",

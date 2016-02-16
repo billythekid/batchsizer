@@ -1,4 +1,4 @@
-@if($project->owner == Auth::user())
+@if($project->owner->id == Auth::user()->id)
     <div class="panel panel-info">
         <div class="panel-heading">Project Owner's Tools <i class="pull-right fa fa-compress minimise-toggle"></i></div>
         <div class="panel-body">
@@ -11,9 +11,6 @@
                         <input type="text" name="name" id="name" class="form-control" value="{{ $project->name }}"
                                placeholder="Project Name">
                     </div>
-                    @if(Auth::user()->plan() == 'agency')
-                        @include('projects.teamMembers')
-                    @endif
                 </div>
                 <div class="col-md-6">
                     <div class="col-sm-offset-1 checkbox checkbox-info">
@@ -24,6 +21,9 @@
 
                     </div>
                 </div>
+                @if(Auth::user()->plan() == 'agency')
+                    @include('projects.teamMembers')
+                @endif
                 <div class="col-md-12">
                     <div class="form-group">
                         <button class="btn btn-primary form-control">Update Project</button>

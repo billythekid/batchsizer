@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\CommonSize;
 use App\Project;
+use App\User;
+use Illuminate\Support\Facades\DB;
 use SplFileInfo;
+use App\CommonSize;
 use App\Http\Requests;
 use App\Jobs\ResizeFile;
 use Illuminate\Http\Request;
@@ -68,8 +70,9 @@ class ProjectController extends Controller
 
             return redirect()->back();
         }
+        $this->validate($request, ['projectname' => 'required'], ['projectname.required' => 'Projects need names']);
         $project = Project::create([
-            'name'    => $request->get('name'),
+            'name'    => $request->get('projectname'),
             'user_id' => $request->user()->id,
         ]);
         // we own the project but it won't appear in our projects list unless we add ourselves to it too.
@@ -120,6 +123,7 @@ class ProjectController extends Controller
             ];
         }
         $commonSizes = CommonSize::orderBy('type')->get();
+
         return view()->make('projects.single',
             compact(
                 'project',
@@ -144,6 +148,33 @@ class ProjectController extends Controller
 
         $project->save_uploads = ($request->has('save_uploads'));
         $project->save_resized_zips = ($request->has('save_resized_zips'));
+
+        $teamIDs = $request->input('teams');
+        $teams = DB::table('teams')
+            ->whereIn('id', $teamIDs)
+            ->where('owner_id', '=', $request->user()->id)
+            ->pluck('id');
+        $project->teams()->sync($teams);
+
+        $memberIDs = [$request->user()->id];
+        foreach ($project->teamMembers as $member)
+        {
+            $memberIDs[] = $member->id;
+        }
+        $project->members()->sync($memberIDs);
+
+        if ($request->has('members'))
+        {
+            foreach ($request->input('members') as $memberID)
+            {
+                if($request->user()->allTeamMembers()->has(User::find($memberID)->email))
+                {
+                    $project->members()->attach($memberID);
+                }
+            }
+        }
+
+
         if ($project->update($request->all()))
         {
             alert()->success('Success', "{$project->name} updated!");
@@ -551,26 +582,26 @@ class ProjectController extends Controller
         $path = "projects/{$project->id}/";
         $path .= $request->type == 'upload' ? 'uploads/' : 'resized/';
         $filename = basename($request->input('file'));
-        $localpath = 'downloads/'.md5(str_random(23));
+        $localpath = 'downloads/' . md5(str_random(23));
         Storage::disk('local')->put($localpath, Storage::get($path . $filename));
 
-        return response()->download(storage_path('app/'.$localpath), $filename)->deleteFileAfterSend(true);
+        return response()->download(storage_path('app/' . $localpath), $filename)->deleteFileAfterSend(true);
     }
 
     public function renameProjectFile(Request $request, Project $project)
     {
         $this->authorize($project);
         $this->validate($request, [
-            'type' => 'required|in:upload,resized',
+            'type'        => 'required|in:upload,resized',
             'oldfilename' => 'required',
-            'file' => 'required',
+            'file'        => 'required',
         ]);
         $path = "projects/{$project->id}/";
         $path .= $request->type == 'upload' ? 'uploads/' : 'resized/';
         $oldFileName = basename($request->input('oldfilename'));
         $newFileName = basename($request->input('file'));
-        $newFileName .= (ends_with($newFileName,'.zip')) ? '' : '.zip';
-        Storage::move($path.$oldFileName, $path.$newFileName);
+        $newFileName .= (ends_with($newFileName, '.zip')) ? '' : '.zip';
+        Storage::move($path . $oldFileName, $path . $newFileName);
         alert()->success('Success', "{$oldFileName} was renamed to {$newFileName}.");
 
         return redirect()->back();

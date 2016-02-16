@@ -28,5 +28,26 @@ class Project extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class);
+    }
+
+    public function teamMembers()
+    {
+        $members = [];
+        foreach ($this->teams as $team)
+        {
+            $members[] = $team->members;
+        }
+        return collect($members)->flatten();
+
+    }
+
+    public function getTeamMembersAttribute()
+    {
+        return $this->teamMembers();
+    }
+
 
 }

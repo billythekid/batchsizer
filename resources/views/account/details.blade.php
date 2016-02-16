@@ -1,5 +1,6 @@
 <div class="panel panel-info">
-    <div class="panel-heading">{{ $user->name }} account details</div>
+    <div class="panel-heading">{{ $user->name }} account details <i
+                class="pull-right fa fa-compress minimise-toggle"></i></div>
 
     <div class="panel-body">
         @if(count($errors) > 0)
@@ -36,7 +37,7 @@
 
 @if(! $invoices->isEmpty() )
     <div class="panel panel-info">
-        <div class="panel-heading">Receipts</div>
+        <div class="panel-heading">Receipts <i class="pull-right fa fa-compress minimise-toggle"></i></div>
         <div class="panel-body">
             <table class="table table-hover">
                 @foreach ($invoices as $invoice)

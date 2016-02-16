@@ -1,6 +1,6 @@
 <div class="col-md-4 plan coming-soon">
     <div class="panel panel-success">
-        <div class="panel-heading">Agency Account <span class="price btn-success"><strong>£25</strong>/month</span>
+        <div class="panel-heading">Agency Account <span class="price btn-success"><strong>£10</strong>/month</span>
         </div>
         <div class="panel-body">
             <p>Unlimited Projects</p>
@@ -28,14 +28,15 @@
             </ul>
             <p>Team members</p>
             <ul>
-                <li>Invite users to your team</li>
+                <li>Invite users to your teams</li>
                 <li>Assign projects on a per-team basis</li>
+                <li>Give individual members access to your project(s)</li>
             </ul>
             @if(Auth::guest())
                 <hr>
-                {{--
+
                     <a href="{{ route('signup','agency') }}" class="btn btn-block btn-primary">Get Agency Account</a>
-                --}}
+
                 <button disabled class="btn btn-block btn-primary">Get Agency Account</button>
             @endif
         </div>

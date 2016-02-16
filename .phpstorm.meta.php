@@ -11,6 +11,7 @@ namespace PHPSTORM_META {
     $STATIC_METHOD_TYPES = [
         new \Illuminate\Contracts\Container\Container => [
             '' == '@',
+            'teamwork' instanceof \Mpociot\Teamwork\Teamwork,
             'events' instanceof \Illuminate\Events\Dispatcher,
             'router' instanceof \Illuminate\Routing\Router,
             'url' instanceof \Illuminate\Routing\UrlGenerator,
@@ -123,6 +124,7 @@ namespace PHPSTORM_META {
         ],
         \Illuminate\Contracts\Container\Container::make('') => [
             '' == '@',
+            'teamwork' instanceof \Mpociot\Teamwork\Teamwork,
             'events' instanceof \Illuminate\Events\Dispatcher,
             'router' instanceof \Illuminate\Routing\Router,
             'url' instanceof \Illuminate\Routing\UrlGenerator,
@@ -235,6 +237,8 @@ namespace PHPSTORM_META {
         ],
         \App::make('') => [
             '' == '@',
+            'teamwork' instanceof \Mpociot\Teamwork\Teamwork,
+
             'events' instanceof \Illuminate\Events\Dispatcher,
             'router' instanceof \Illuminate\Routing\Router,
             'url' instanceof \Illuminate\Routing\UrlGenerator,
@@ -347,6 +351,8 @@ namespace PHPSTORM_META {
         ],
         app('') => [
             '' == '@',
+            'teamwork' instanceof \Mpociot\Teamwork\Teamwork,
+
             'events' instanceof \Illuminate\Events\Dispatcher,
             'router' instanceof \Illuminate\Routing\Router,
             'url' instanceof \Illuminate\Routing\UrlGenerator,

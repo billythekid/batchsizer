@@ -163,6 +163,8 @@ return [
         GeneaLabs\LaravelCaffeine\LaravelCaffeineServiceProvider::class,
         Infinety\SweetAlert\AlertServiceProvider::class,
         Laravel\Cashier\CashierServiceProvider::class,
+        Mpociot\Teamwork\TeamworkServiceProvider::class,
+
     ],
 
     /*

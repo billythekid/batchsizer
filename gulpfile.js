@@ -30,6 +30,7 @@ elixir(function (mix) {
             'sweetalert.js',
             'dropzone.js',
             'bootstrap-slider.min.js',
+            'html.sortable.js',
             'app.js'
         ]);
 });

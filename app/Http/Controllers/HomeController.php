@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Mpociot\Teamwork\Facades\Teamwork;
+use Mpociot\Teamwork\TeamInvite;
 
 class HomeController extends Controller
 {
+
     /**
      * Create a new controller instance.
      *
@@ -25,8 +28,8 @@ class HomeController extends Controller
     public function index()
     {
         $user = request()->user();
-        $invoices = $user->invoices();
-
-        return view('home', compact('user', 'invoices'));
+        $invoices = $user->hasStripeId() ? $user->invoices() : collect([]);
+        $pendingInvites = TeamInvite::where('email', $user->email)->get();
+        return view('home', compact('user', 'invoices', 'pendingInvites'));
     }
 }
