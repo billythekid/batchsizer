@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
 use App\User;
 use App\Project;
 use SplFileInfo;
@@ -625,10 +626,11 @@ class ProjectController extends Controller
         $emailUploadAddress->email = $email;
         $emailUploadAddress->save();
 
-        if($request->ajax())
+        if ($request->ajax())
         {
             return $emailUploadAddress;
         }
+
         return redirect()->back();
     }
 
@@ -639,20 +641,94 @@ class ProjectController extends Controller
      */
     public function resizeByEmail(Request $request)
     {
-        $email = EmailUploadAddress::where('email',$request->input('recipient'))->first();
-        $project = $email->project;
-        $user = $email->user;
-        $reply_to = $request->input('sender');
-        $uploadCount = (int) $request->input('attachment-count'); //use this for grabbing the attachments
-        $greyscale = str_contains($request->input('subject'),['grey','gray']);
-        $sizes = explode(',',$request->input('subject'));
-        $attachments = [];
-        foreach(range(1,$uploadCount) as $index)
+        $email = EmailUploadAddress::where('email', $request->input('recipient'))->first();
+        if (is_null($email))
         {
-            $attachments[] = $request->file('attachment-'.$index)->getClientOriginalName();
+            return "Thanks mailgun!";
         }
-        Log::info(collect($attachments));
-        return 'Thanks MailGun!';
+        $user = $email->user;
+        if (is_null($user))
+        {
+            return "Thanks mailgun!";
+        }
+        $reply_to = $request->input('sender');
+        $project = $email->project;
+        if (is_null($project))
+        {
+            Mail::send('emails.feedback', ['feedback' => 'This project does not exist, your images have not been resized'], function ($msg) use ($user, $email, $reply_to)
+            {
+                $msg->from($email->email);
+                $msg->to($reply_to, $user->name)->subject('Your Resized Images');
+            });
+
+            return "Thanks mailgun!";
+        }
+
+        $uploadCount = (int)$request->input('attachment-count'); //use this for grabbing the attachments
+        $greyscale = str_contains($request->input('subject'), ['grey', 'gray']);
+        $sizes = $request->input('subject');
+        $files = [];
+        foreach (range(1, $uploadCount) as $index)
+        {
+            $files[] = $request->file('attachment-' . $index);
+        }
+
+        $download = (!$project->save_resized_zips || $request->has('download'));
+
+        $options = [
+            'quality'     => 100,
+            'responsive'  => true,
+            'noupscale'   => true,
+            'greyscale'   => $greyscale,
+            'aspectRatio' => true,
+            'pixelate'    => 0,
+            'red'         => 0,
+            'green'       => 0,
+            'blue'        => 0,
+            'blur'        => 0,
+        ];
+
+        $tempFiles = $this->SaveTempFiles($project, $files);
+        $resizedZip = $this->resizeFiles($project, $tempFiles, $sizes, $options);
+        $resizedZipObject = new SplFileInfo($resizedZip['zip']);
+
+
+        if ($project->save_uploads)
+        {
+            $directory = 'projects/' . $project->id . '/uploads';
+            $this->saveFiles($directory, $tempFiles, true);
+        } else
+        {
+            File::delete($tempFiles);
+        }
+
+        if ($project->save_resized_zips)
+        {
+            $directory = 'projects/' . $project->id . '/resized';
+            $this->saveFiles($directory, [0 => $resizedZipObject], true);
+        }
+
+        if (!File::exists($resizedZip['zip']))
+        {
+            Mail::queue('emails.feedback', ['feedback' => 'There was a problem resizing your images, please try again or log in to the web tool.'], function ($msg) use ($user, $email, $reply_to)
+            {
+                $msg->from($email->email);
+                $msg->to($reply_to, $user->name)->subject('Your Resized Images');
+            });
+
+            return 'Thanks mailgun!';
+        }
+
+        $original = $resizedZipObject->getRealPath();
+
+        Mail::queue('emails.emailResized', ['user' => $user], function ($msg) use ($user, $email, $reply_to, $original)
+        {
+            $msg->from($email->email);
+            $msg->to($reply_to, $user->name)->subject('Your Resized Images');
+            $msg->attach($original, ['as' => 'resized.zip']);
+        });
+
+        return 'Thanks mailgun!';
     }
 
 }
