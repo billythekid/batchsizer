@@ -44,10 +44,10 @@
                         prefer!) in the subject line, before or after your sizes.
                     </li>
                     <li>
-                        Attach your images, either in a zip or individually. Hit send!
+                        Attach your images, either in a zip (recommended) or individually. Hit send!
                     </li>
                 </ul>
-                <p>We'll email your resized images straight back to you!</p>
+                <p>We'll email your resized images back to you!</p>
             </div>
 
         </div>

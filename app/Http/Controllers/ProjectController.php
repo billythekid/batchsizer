@@ -728,7 +728,7 @@ class ProjectController extends Controller
 
         $original = $resizedZipObject->getRealPath();
 
-        Mail::queue('emails.emailResized', ['user' => $user], function ($msg) use ($user, $email, $reply_to, $original)
+        Mail::queue('emails.emailResized', ['user' => $user, 'sizes' => $request->input('subject')], function ($msg) use ($user, $email, $reply_to, $original)
         {
             $msg->from($email->email);
             $msg->to($reply_to, $user->name)->subject('Your Resized Images');
