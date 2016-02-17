@@ -121,9 +121,11 @@
                     @endif
 
                     <div class="col-xs-6 col-sm-4 col-md-3">
-                        <img class="img img-thumbnail"
-                             src="{{ url("images/examples/{$example['folder']}/tn-{$file->getBasename()}") }}"
-                             title="{{ $file->getBasename() }}" alt="{{ $file->getBasename() }}">
+                        <a target="_blank" href="{{ url("images/examples/{$example['folder']}/{$file->getBasename()}") }}">
+                            <img class="img img-thumbnail"
+                                 src="{{ url("images/examples/{$example['folder']}/tn-{$file->getBasename()}") }}"
+                                 title="{{ $file->getBasename() }}" alt="{{ $file->getBasename() }}">
+                        </a>
                         <table class="table table-condensed table-rows">
                             <tr>
                                 <th><i class="fa fa-arrows-h"></i></th>
