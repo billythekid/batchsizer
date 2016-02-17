@@ -277,6 +277,10 @@ class ProjectController extends Controller
      */
     private function saveFiles($directory, $tempFiles, $deleteOnComplete = false)
     {
+        $tempFiles = array_filter($tempFiles, function (SplFileInfo $file)
+        {
+            return ends_with($file->getFilename(),'.zip') || $this->fileIsAnImage($file->getRealPath());
+        });
         foreach ($tempFiles as $file)
         {
             $filename = $file->getFilename();
@@ -364,7 +368,7 @@ class ProjectController extends Controller
         $sizesString = "-" . $sizesString;
         $tempFiles = array_filter($tempFiles, function (SplFileInfo $file)
         {
-            return $file->getExtension() != 'zip' && $this->fileIsAnImage($file->getRealPath());
+            return $this->fileIsAnImage($file->getRealPath());
         });
 
         $totalConversions = count($sizes) * count($tempFiles);
