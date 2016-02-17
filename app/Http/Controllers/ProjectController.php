@@ -398,9 +398,6 @@ class ProjectController extends Controller
 
         foreach ($tempFiles as $tempFile)
         {
-            $currentFile++;
-            $percentageComplete = ceil(($currentFile / $totalConversions) * 100);
-
             $image = Image::make($tempFile);
             $image->backup(); // our reset state
 
@@ -408,6 +405,8 @@ class ProjectController extends Controller
             {
                 if ($pusher !== false)
                 {
+                    $currentFile++;
+                    $percentageComplete = ceil(($currentFile / $totalConversions) * 100);
                     event(new FileBeingProcessed($percentageComplete, $pusher));
                 }
                 $dimension = explode('x', $dimension);
