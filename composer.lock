@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.15.1",
+            "version": "3.15.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "5e6078913293576de969703481994b77c380ca30"
+                "reference": "ead3e25640df96705e6fb7d9137653dc75b191e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/5e6078913293576de969703481994b77c380ca30",
-                "reference": "5e6078913293576de969703481994b77c380ca30",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/ead3e25640df96705e6fb7d9137653dc75b191e0",
+                "reference": "ead3e25640df96705e6fb7d9137653dc75b191e0",
                 "shasum": ""
             },
             "require": {
@@ -85,7 +85,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-02-11 23:23:31"
+            "time": "2016-02-17 00:04:30"
         },
         {
             "name": "chumper/zipper",
@@ -434,16 +434,16 @@
         },
         {
             "name": "genealabs/laravel-caffeine",
-            "version": "0.3.2",
+            "version": "0.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GeneaLabs/laravel-caffeine.git",
-                "reference": "c8fad8358b7927339c6451d62c6cbb155875015e"
+                "reference": "644093283ba68ecd9585d4af05d0bfec173acfb4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GeneaLabs/laravel-caffeine/zipball/c8fad8358b7927339c6451d62c6cbb155875015e",
-                "reference": "c8fad8358b7927339c6451d62c6cbb155875015e",
+                "url": "https://api.github.com/repos/GeneaLabs/laravel-caffeine/zipball/644093283ba68ecd9585d4af05d0bfec173acfb4",
+                "reference": "644093283ba68ecd9585d4af05d0bfec173acfb4",
                 "shasum": ""
             },
             "require": {
@@ -471,7 +471,7 @@
                 }
             ],
             "description": "Keeping Your Laravel Forms Awake",
-            "time": "2016-02-15 04:20:31"
+            "time": "2016-02-17 04:06:01"
         },
         {
             "name": "guzzlehttp/guzzle",
