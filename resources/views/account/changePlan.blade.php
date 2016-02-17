@@ -7,7 +7,9 @@
         </div>
         <div class="col-md-8">
             <h3>Other Plans</h3>
-            <button class="btn btn-primary plan-button" disabled>Change to Selected Plan</button>
+            <p>Changing plans has not yet made it into the beta, we hope to bring this functionality soon. That's not to say it can't be done though, please send us an email if you would like to change plans and we will update your account accordingly.</p>
+            {{--<button class="btn btn-primary plan-button" disabled>Change to Selected Plan</button>--}}
+            <hr class="invisible">
         </div>
         <div class="current-plan">
             @include('_includes.planDetails.'.$user->plan)
