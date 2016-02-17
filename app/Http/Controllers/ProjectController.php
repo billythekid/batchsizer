@@ -214,7 +214,7 @@ class ProjectController extends Controller
             return response()->json(['status' => 'error', 'message' => 'No images were uploaded!']);
         }
 
-        $sizes = $request->input('dimensions');
+        $sizes = str_replace(' ','',$request->input('dimensions'));
         $download = (!$project->save_resized_zips || $request->has('download'));
 
         $options = [
@@ -674,7 +674,7 @@ class ProjectController extends Controller
 
         $uploadCount = (int)$request->input('attachment-count'); //use this for grabbing the attachments
         $greyscale = str_contains($request->input('subject'), ['grey', 'gray']);
-        $sizes = $request->input('subject');
+        $sizes = str_replace([' ','grey','gray'],'',$request->input('subject'));
         $files = [];
         foreach (range(1, $uploadCount) as $index)
         {
@@ -699,7 +699,6 @@ class ProjectController extends Controller
         $tempFiles = $this->SaveTempFiles($project, $files);
         $resizedZip = $this->resizeFiles($project, $tempFiles, $sizes, $options);
         $resizedZipObject = new SplFileInfo($resizedZip['zip']);
-
 
         if ($project->save_uploads)
         {
