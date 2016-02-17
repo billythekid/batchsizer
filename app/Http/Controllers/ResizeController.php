@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\FileBeingProcessed;
 use App\Http\Requests;
 use Chumper\Zipper\Zipper;
+use File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -194,7 +195,88 @@ class ResizeController extends Controller
         {
             return 25;
         }
+
         return 10; //not logged in
+    }
+
+    public function examples()
+    {
+        $originalfiles = File::allFiles(public_path('images/examples/originals'));
+        $originals = [
+            [
+                "file"         => "/examples/originals/1.jpg",
+                "thumb"        => "/examples/originals/tn-1.jpg",
+                "width"        => 5398,
+                "height"       => 3599,
+                "filesize"     => 4048056,
+                "photographer" => "Carli Jean",
+                "link"         => "https://unsplash.com/photos/UWRqlJcDCXA",
+            ],
+            [
+                "file"         => "/examples/originals/2.jpeg",
+                "thumb"        => "/examples/originals/tn-2.jpeg",
+                "width"        => 4500,
+                "height"       => 3000,
+                "filesize"     => 4501440,
+                "photographer" => "Vladimir Kudinov",
+                "link"         => "https://unsplash.com/photos/OT5nbP2m24I",
+            ],
+            [
+                "file"         => "/examples/originals/3.jpg",
+                "thumb"        => "/examples/originals/tn-3.jpg",
+                "width"        => 4288,
+                "height"       => 2848,
+                "filesize"     => 2382367,
+                'photographer' => 'Stefanus Martanto Setyo Husodo',
+                "link"         => 'https://unsplash.com/photos/GKR1tBkmW3M',
+            ],
+            [
+                "file"         => "/examples/originals/5.jpg",
+                "thumb"        => "/examples/originals/tn-5.jpg",
+                "width"        => 6935,
+                "height"       => 4283,
+                "filesize"     => 8777663,
+                "photographer" => "Dmitry Sytnik",
+                "link"         => "https://unsplash.com/photos/bW2vHKCxbx4",
+            ],
+            [
+                "file"         => "/examples/originals/6.jpg",
+                "thumb"        => "/examples/originals/tn-6.jpg",
+                "width"        => 5616,
+                "height"       => 3744,
+                "filesize"     => 4560702,
+                "photographer" => "Benjamin Combs",
+                "link"         => "https://unsplash.com/photos/hiAdjnXZxl8",
+            ],
+            [
+                "file"         => "/examples/originals/7.jpg",
+                "thumb"        => "/examples/originals/tn-7.jpg",
+                "width"        => 4912,
+                "height"       => 2760,
+                "filesize"     => 3588691,
+                "photographer" => 'Lili Popper',
+                "link"         => 'https://unsplash.com/photos/71cd1rWqO8M',
+            ],
+        ];
+
+        $examples = [
+            [
+                "folder"     => 1,
+                "sizes"      => "250,768,1024,2048,5096",
+                "quality"    => "100",
+                "responsive" => true,
+                "upscaling"  => true,
+                "ratio"      => true,
+                "greyscale"  => false,
+                "red"        => 0,
+                "green"      => 0,
+                "blue"       => 0,
+                "pixels"     => 0,
+            ],
+        ];
+
+
+        return view()->make('examples.index', compact('originals', 'examples'));
     }
 
 }

@@ -1871,4 +1871,11 @@ div.card:before {
 i.handle {
     cursor: move;
 }
+
+.examples td.clipping {
+    max-width: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
 /*# sourceMappingURL=all.css.map */

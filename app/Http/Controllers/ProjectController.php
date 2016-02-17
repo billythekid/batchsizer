@@ -523,7 +523,7 @@ class ProjectController extends Controller
     {
         $this->authorize($project);
 
-        return response()->download(storage_path("app/resizedfiles/{$project->id}/{$directory}/download.zip"), str_slug($filename))->deleteFileAfterSend(true);
+        return response()->download(storage_path("app/resizedfiles/{$project->id}/{$directory}/download.zip"), $filename)->deleteFileAfterSend(true);
     }
 
     /**

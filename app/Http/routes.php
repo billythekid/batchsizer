@@ -83,10 +83,7 @@ Route::group(['middleware' => ['web']], function ()
     {
         return view()->make('about');
     })->name('about');
-    Route::get('examples', function ()
-    {
-        return view()->make('examples.index');
-    })->name('examples');
+    Route::get('examples', 'ResizeController@examples')->name('examples');
 
     Route::post('feedback', function ()
     {
