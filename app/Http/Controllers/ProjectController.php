@@ -398,16 +398,16 @@ class ProjectController extends Controller
         {
             $currentFile++;
             $percentageComplete = ceil(($currentFile / $totalConversions) * 100);
-            if (request()->has('channel'))
-            {
-                event(new FileBeingProcessed($percentageComplete, request('channel')));
-            }
+
             $image = Image::make($tempFile);
             $image->backup(); // our reset state
 
             foreach ($sizes as $dimension)
             {
-
+                if (request()->has('channel'))
+                {
+                    event(new FileBeingProcessed($percentageComplete, request('channel')));
+                }
                 $dimension = explode('x', $dimension);
                 $width = $dimension[0];
                 $width = (is_numeric($width) && $width > 0) ? $width : $image->width();
