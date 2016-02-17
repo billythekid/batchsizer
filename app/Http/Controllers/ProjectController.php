@@ -311,10 +311,9 @@ class ProjectController extends Controller
         foreach ($files as $file)
         {
             $filename = $file->getClientOriginalName();
-            if ($this->fileIsAnImage($filename))
-            {
-                $movedFile = $file->move($storage_path, $filename);
-            }
+
+            $movedFile = $file->move($storage_path, $filename);
+
             if (ends_with($filename, '.zip'))
             {
                 $extractPath = $storage_path;
