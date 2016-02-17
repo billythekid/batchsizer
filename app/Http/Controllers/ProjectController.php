@@ -311,7 +311,10 @@ class ProjectController extends Controller
         foreach ($files as $file)
         {
             $filename = $file->getClientOriginalName();
-            $movedFile = $file->move($storage_path, $filename);
+            if ($this->fileIsAnImage($filename))
+            {
+                $movedFile = $file->move($storage_path, $filename);
+            }
             if (ends_with($filename, '.zip'))
             {
                 $extractPath = $storage_path;
@@ -362,7 +365,7 @@ class ProjectController extends Controller
         $sizesString = "-" . $sizesString;
         $tempFiles = array_filter($tempFiles, function (SplFileInfo $file)
         {
-            return $file->getExtension() != 'zip';
+            return $file->getExtension() != 'zip' && $this->fileIsAnImage($file->getRealPath());
         });
 
         $totalConversions = count($sizes) * count($tempFiles);
