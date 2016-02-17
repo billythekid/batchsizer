@@ -272,7 +272,10 @@ class ResizeController extends Controller
                 "blue"       => 0,
                 "pixels"     => 0,
                 "zip"        => "examples-250-768-1024-2048-5096-q100.zip",
-                "files"      => File::allFiles(public_path('images/examples/1')),
+                "files"      => array_filter(File::allFiles(public_path('images/examples/1')), function ($array)
+                {
+                    return (!starts_with($array->getBasename(), 'tn-') && !ends_with($array->getBasename(), '.zip'));
+                }),
                 "sizes"      => $sizes,
             ],
             [
@@ -287,7 +290,10 @@ class ResizeController extends Controller
                 "blue"       => 0,
                 "pixels"     => 0,
                 "zip"        => "examples-250-768-1024-2048-5096-q95.zip",
-                "files"      => File::allFiles(public_path('images/examples/2')),
+                "files"      => array_filter(File::allFiles(public_path('images/examples/2')), function ($array)
+                {
+                    return (!starts_with($array->getBasename(), 'tn-') && !ends_with($array->getBasename(), '.zip'));
+                }),
                 "sizes"      => $sizes,
             ],
             [
@@ -302,7 +308,10 @@ class ResizeController extends Controller
                 "blue"       => 0,
                 "pixels"     => 0,
                 "zip"        => "examples-250-768-1024-2048-5096-q75.zip",
-                "files"      => File::allFiles(public_path('images/examples/3')),
+                "files"      => array_filter(File::allFiles(public_path('images/examples/3')), function ($array)
+                {
+                    return (!starts_with($array->getBasename(), 'tn-') && !ends_with($array->getBasename(), '.zip'));
+                }),
                 "sizes"      => $sizes,
             ],
             [
@@ -317,7 +326,10 @@ class ResizeController extends Controller
                 "blue"       => 0,
                 "pixels"     => 0,
                 "zip"        => "examples-250-768-1024-2048-5096-q50.zip",
-                "files"      => File::allFiles(public_path('images/examples/4')),
+                "files"      => array_filter(File::allFiles(public_path('images/examples/4')), function ($array)
+                {
+                    return (!starts_with($array->getBasename(), 'tn-') && !ends_with($array->getBasename(), '.zip'));
+                }),
                 "sizes"      => $sizes,
             ],
             [
@@ -332,7 +344,10 @@ class ResizeController extends Controller
                 "blue"       => 0,
                 "pixels"     => 0,
                 "zip"        => "examples-250-768-1024-2048-5096-q75.zip",
-                "files"      => File::allFiles(public_path('images/examples/5')),
+                "files"      => array_filter(File::allFiles(public_path('images/examples/5')), function ($array)
+                {
+                    return (!starts_with($array->getBasename(), 'tn-') && !ends_with($array->getBasename(), '.zip'));
+                }),
                 "sizes"      => $sizes,
             ],
             [
@@ -347,7 +362,10 @@ class ResizeController extends Controller
                 "blue"       => 0,
                 "pixels"     => 0,
                 "zip"        => "examples-250-768-1024-2048-5096-q75-bw.zip",
-                "files"      => File::allFiles(public_path('images/examples/6')),
+                "files"      => array_filter(File::allFiles(public_path('images/examples/6')), function ($array)
+                {
+                    return (!starts_with($array->getBasename(), 'tn-') && !ends_with($array->getBasename(), '.zip'));
+                }),
                 "sizes"      => $sizes,
             ],
             [
@@ -362,7 +380,10 @@ class ResizeController extends Controller
                 "blue"       => 0,
                 "pixels"     => 0,
                 "zip"        => "examples-250-768-1024-2048-5096-q75-r50g0b0.zip",
-                "files"      => File::allFiles(public_path('images/examples/7')),
+                "files"      => array_filter(File::allFiles(public_path('images/examples/7')), function ($array)
+                {
+                    return (!starts_with($array->getBasename(), 'tn-') && !ends_with($array->getBasename(), '.zip'));
+                }),
                 "sizes"      => $sizes,
             ],
             [
@@ -377,7 +398,10 @@ class ResizeController extends Controller
                 "blue"       => 0,
                 "pixels"     => 0,
                 "zip"        => "examples-250-768-1024-2048-5096-q75-bw-r50g0b0.zip",
-                "files"      => File::allFiles(public_path('images/examples/8')),
+                "files"      => array_filter(File::allFiles(public_path('images/examples/8')), function ($array)
+                {
+                    return (!starts_with($array->getBasename(), 'tn-') && !ends_with($array->getBasename(), '.zip'));
+                }),
                 "sizes"      => $sizes,
             ],
             [
@@ -392,7 +416,10 @@ class ResizeController extends Controller
                 "blue"       => 50,
                 "pixels"     => 0,
                 "zip"        => "examples-250-768-1024-2048-5096-q75-bw-r50g50b50.zip",
-                "files"      => File::allFiles(public_path('images/examples/9')),
+                "files"      => array_filter(File::allFiles(public_path('images/examples/9')), function ($array)
+                {
+                    return (!starts_with($array->getBasename(), 'tn-') && !ends_with($array->getBasename(), '.zip'));
+                }),
                 "sizes"      => $sizes,
             ],
             [
@@ -407,7 +434,10 @@ class ResizeController extends Controller
                 "blue"       => 0,
                 "pixels"     => "xs",
                 "zip"        => "examples-250-768-1024-2048-5096-q50.zip",
-                "files"      => File::allFiles(public_path('images/examples/10')),
+                "files"      => array_filter(File::allFiles(public_path('images/examples/10')), function ($array)
+                {
+                    return (!starts_with($array->getBasename(), 'tn-') && !ends_with($array->getBasename(), '.zip'));
+                }),
                 "sizes"      => $sizes,
             ],
             [
@@ -422,7 +452,10 @@ class ResizeController extends Controller
                 "blue"       => 0,
                 "pixels"     => "m",
                 "zip"        => "examples-250-768-1024-2048-5096-q50.zip",
-                "files"      => File::allFiles(public_path('images/examples/11')),
+                "files"      => array_filter(File::allFiles(public_path('images/examples/11')), function ($array)
+                {
+                    return (!starts_with($array->getBasename(), 'tn-') && !ends_with($array->getBasename(), '.zip'));
+                }),
                 "sizes"      => $sizes,
             ],
             [
@@ -437,7 +470,10 @@ class ResizeController extends Controller
                 "blue"       => 0,
                 "pixels"     => "xl",
                 "zip"        => "examples-250-768-1024-2048-5096-q50.zip",
-                "files"      => File::allFiles(public_path('images/examples/12')),
+                "files"      => array_filter(File::allFiles(public_path('images/examples/12')), function ($array)
+                {
+                    return (!starts_with($array->getBasename(), 'tn-') && !ends_with($array->getBasename(), '.zip'));
+                }),
                 "sizes"      => $sizes,
             ],
             [
@@ -450,14 +486,40 @@ class ResizeController extends Controller
                 "red"        => 0,
                 "green"      => 0,
                 "blue"       => 0,
-                "pixels"     => "0",
+                "pixels"     => 0,
                 "zip"        => "examples-250x125-768x384-1024x512-2048x1024-5096x2048-q50.zip",
-                "files"      => File::allFiles(public_path('images/examples/12')),
-                "sizes"      => ["250x125","768x384","1024x512","2048x1024","5096x2048"],
+                "files"      => array_filter(File::allFiles(public_path('images/examples/13')), function ($array)
+                {
+                    return (!starts_with($array->getBasename(), 'tn-') && !ends_with($array->getBasename(), '.zip'));
+                }),
+                "sizes"      => ["250x125", "768x384", "1024x512", "2048x1024", "5096x2048"],
             ],
 
         ];
 
+        foreach ($examples as &$example)
+        {
+            usort($example['files'], 'sort_by_file_width');
+            foreach($example['files'] as &$file)
+            {
+                $path = $file->getRealPath();
+                $file->size = getimagesize($path);
+            }
+        }
+
+
+        /*
+               $example = $examples[3];
+                    foreach ($example['files'] as $file)
+                    {
+                        $filename = $file->getBasename();
+                        $path = $file->getPath();
+                        if (!file_exists($path . "/tn-" . $filename) && !ends_with($filename, '.zip') )
+                        {
+                            Image::make($file)->widen(250)->save($path . "/tn-" . $filename);
+                        }
+                    }
+        */
 
         return view()->make('examples.index', compact('originals', 'examples'));
     }

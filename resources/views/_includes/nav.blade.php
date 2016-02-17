@@ -20,9 +20,10 @@
             <ul class="nav navbar-nav">
                 @if (Auth::guest())
                     <li><a href="{{ route('about') }}">About</a></li>
-                    @else
+                @else
                     <li><a href="{{ route('home') }}">Dashboard</a></li>
                 @endif
+                    <li><a href="{{ route('examples') }}">Examples</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
