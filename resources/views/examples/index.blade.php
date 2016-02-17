@@ -42,11 +42,12 @@
         </div>
     </div>
 
+    @foreach(range(0,11) as $index)
     <div class="panel panel-info">
         <div class="panel-body">
-            @foreach($examples as $example)
-            @endforeach
+
         </div>
     </div>
+    @endforeach
 
 @endsection
