@@ -1,4 +1,4 @@
-<div class="col-md-4 plan coming-soon">
+<div class="col-md-4 plan">
     <div class="panel panel-success">
         <div class="panel-heading">Agency Account <span class="price btn-success"><strong>£10</strong>/month</span>
         </div>
@@ -33,11 +33,11 @@
                 <li>Give individual members access to your project(s)</li>
             </ul>
                 <hr>
-{{--
                     <a href="{{ route('signup','agency') }}" class="btn btn-block btn-primary">Get Agency Account</a>
-                    --}}
 
+{{--
                 <button disabled class="btn btn-block btn-primary">Get Agency Account</button>
+--}}
         </div>
     </div>
 </div>
