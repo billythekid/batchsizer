@@ -53,6 +53,8 @@
                    href="{{ url("images/examples/{$example['folder']}/{$example['zip']}") }}">
                     <i class="fa fa-download"></i> <i class="fa fa-file-archive-o"></i>
                 </a>
+                <span class="hidden">{{ $example['folder'] }}</span>
+                <i class="pull-right fa fa-compress minimise-toggle"></i>
             </div>
             <div class="panel-body">
                 <div class="col-xs-6 col-sm-4 col-md-3">
