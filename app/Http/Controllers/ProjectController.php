@@ -394,6 +394,8 @@ class ProjectController extends Controller
         $zipFileName .= ".zip";
         $zipFilePath = $folder . $zipFileName;
         $zip = Zipper::make($zipFilePath);
+        $pusher = request()->has('channel') ? request('channel') : false;
+
         foreach ($tempFiles as $tempFile)
         {
             $currentFile++;
@@ -404,9 +406,9 @@ class ProjectController extends Controller
 
             foreach ($sizes as $dimension)
             {
-                if (request()->has('channel'))
+                if ($pusher !== false)
                 {
-                    event(new FileBeingProcessed($percentageComplete, request('channel')));
+                    event(new FileBeingProcessed($percentageComplete, $pusher));
                 }
                 $dimension = explode('x', $dimension);
                 $width = $dimension[0];
