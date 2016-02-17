@@ -4,16 +4,22 @@
     <div class="panel panel-info">
         <div class="panel-heading">Resizing examples</div>
         <div class="panel-body">
-            <p>Here you can see how a number of images have been resized using various settings in the paid version of
-                the resizer.</p>
-            <p>All these examples can be achieved on any of the plans.</p>
-
-            <p>Here are the original files used to create all the results shown below. Click the thumbnails for the
-                full-size images.</p>
-            <p>You can download a zip file of these images here:
+            <p>
+                Here you can see how a number of images have been resized using various settings in the paid version of
+                the resizer. All these examples can be achieved on any of the plans.
+            </p>
+            <p>
+                Here are the original files used to create all the results shown below. Click the thumbnails for the
+                full-size images. You can download a zip file of these images here:
                 <a class="btn btn-info btn-xs" href="{{ url('images/examples/originals/originals.zip') }}">
                     <i class="fa fa-download"></i> <i class="fa fa-file-archive-o"></i>
                 </a>
+            </p>
+            <p>
+                Pay particular attention to the file sizes indicated with a <i class="fa fa-balance-scale"></i> icon.
+                These can be dramatically reduced by altering the quality setting with negligible visual impact,
+                especially for web use. The first few panels below use the same settings with the exception of the
+                quality setting.
             </p>
             @foreach($originals as $original)
                 <div class="col-xs-4 col-md-2">
@@ -123,7 +129,8 @@
                     @endif
 
                     <div class="col-xs-6 col-sm-4 col-md-3">
-                        <a target="_blank" href="{{ url("images/examples/{$example['folder']}/{$file->getBasename()}") }}">
+                        <a target="_blank"
+                           href="{{ url("images/examples/{$example['folder']}/{$file->getBasename()}") }}">
                             <img class="img img-thumbnail"
                                  src="{{ url("images/examples/{$example['folder']}/tn-{$file->getBasename()}") }}"
                                  title="{{ $file->getBasename() }}" alt="{{ $file->getBasename() }}">
