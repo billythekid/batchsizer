@@ -402,10 +402,11 @@ class ProjectController extends Controller
             {
                 event(new FileBeingProcessed($percentageComplete, request('channel')));
             }
+            $image = Image::make($tempFile);
+            $image->backup(); // our reset state
 
             foreach ($sizes as $dimension)
             {
-                $image = Image::make($tempFile);
 
                 $dimension = explode('x', $dimension);
                 $width = $dimension[0];
@@ -496,9 +497,9 @@ class ProjectController extends Controller
                 $image->save($imageName, $options['quality']);
                 $zip->addString($imageName, $image);
                 @unlink($imageName);
-                $image->destroy();
-
+                $image->reset();
             }
+            $image->destroy();
 
         }
 
