@@ -392,8 +392,10 @@ class ProjectController extends Controller
         {
             $currentFile++;
             $percentageComplete = ceil(($currentFile / $totalConversions) * 100);
-            event(new FileBeingProcessed($percentageComplete, request('channel')));
-
+            if (request()->has('channel'))
+            {
+                event(new FileBeingProcessed($percentageComplete, request('channel')));
+            }
             $image = Image::make($tempFile);
 
             foreach ($sizes as $dimension)
