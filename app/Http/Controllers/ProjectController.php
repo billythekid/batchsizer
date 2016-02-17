@@ -402,10 +402,11 @@ class ProjectController extends Controller
             {
                 event(new FileBeingProcessed($percentageComplete, request('channel')));
             }
-            $image = Image::make($tempFile);
 
             foreach ($sizes as $dimension)
             {
+                $image = Image::make($tempFile);
+
                 $dimension = explode('x', $dimension);
                 $width = $dimension[0];
                 $width = (is_numeric($width) && $width > 0) ? $width : $image->width();
@@ -495,9 +496,10 @@ class ProjectController extends Controller
                 $image->save($imageName, $options['quality']);
                 $zip->addString($imageName, $image);
                 @unlink($imageName);
+                $image->destroy();
+
             }
 
-            $image->destroy();
         }
 
         //now we have all our files in our zip, let's return it
