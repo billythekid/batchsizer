@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Mpociot\Teamwork\Facades\Teamwork;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Contracts\Validation\ValidationException;
 
 
@@ -141,11 +142,19 @@ class TeamController extends Controller
         $invite = Teamwork::getInviteFromAcceptToken($token);
         if ($invite)
         {
-            $password = str_random(13);
-            $user = User::firstOrCreate(['email' => $invite->email, 'password' => bcrypt($password)]);
+
+            try {
+                $user = User::where(['email' => $invite->email])->firstOrFail();
+            }
+            catch(ModelNotFoundException $e)
+            {
+                $password = str_random(13);
+                $user = User::create(['email' => $invite->email, 'password' => bcrypt($password)]);
+                alert()->overlay('Welcome!', "Please copy or change this password for your account:\n{$password}\n\n", "info");
+            }
+
             Auth::login($user);
             Teamwork::acceptInvite($invite);
-            alert()->overlay('Welcome!', "Please copy or change this password for your account:\n{$password}\n\n", "info");
 
             return redirect()->route('home');
         }
