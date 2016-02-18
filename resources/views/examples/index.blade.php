@@ -19,7 +19,8 @@
                 Pay particular attention to the file sizes indicated with a <i class="fa fa-balance-scale"></i> icon.
                 These can be dramatically reduced by altering the quality setting with negligible visual impact,
                 especially for web use. The first few panels below use the same settings with the exception of the
-                quality setting.
+                quality setting. Also note "missing" files for the sizes given and compare their original size with the
+                setting for preventing upscaling.
             </p>
             @foreach($originals as $original)
                 <div class="col-xs-4 col-md-2">

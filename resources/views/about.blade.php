@@ -36,7 +36,9 @@
         <p>Paid accounts <strong>have the option</strong> to retain their uploaded images and zip files.</p>
 
         <p class="question">How much does it cost?</p>
-        <p>Paid user accounts allow additional functionality to customers.</p>
+        <p>Paid user accounts allow additional functionality to customers. To see some examples of the image
+            manipulation that can be achieved with an account, check out our <a href="{{ route('examples') }}">examples
+                page <i class="fa fa-link"></i></a></p>
         <p>We currently have 3 tiers for paid accounts.</p>
         @include('_includes.plans')
 
