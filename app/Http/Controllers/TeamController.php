@@ -143,10 +143,12 @@ class TeamController extends Controller
         if ($invite)
         {
 
-            try {
+            try
+            {
                 $user = User::where(['email' => $invite->email])->firstOrFail();
+                alert()->overlay('Thanks!', "You have been added to the team. Projects you have been added to will appear in your projects list.", "info");
             }
-            catch(ModelNotFoundException $e)
+            catch (ModelNotFoundException $e)
             {
                 $password = str_random(13);
                 $user = User::create(['email' => $invite->email, 'password' => bcrypt($password)]);
@@ -170,7 +172,7 @@ class TeamController extends Controller
             abort(404);
         }
         $user = User::find($request->input('userID'));
-        if (! $request->user()->allTeamMembers()->has($user->email))
+        if (!$request->user()->allTeamMembers()->has($user->email))
         {
             abort(403);
         }
@@ -190,7 +192,7 @@ class TeamController extends Controller
             abort(404);
         }
         $user = User::find($request->input('userID'));
-        if (! $request->user()->allTeamMembers()->has($user->email))
+        if (!$request->user()->allTeamMembers()->has($user->email))
         {
             abort(403);
         }
