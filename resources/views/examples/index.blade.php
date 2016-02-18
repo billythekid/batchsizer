@@ -16,7 +16,7 @@
                 </a>
             </p>
             <p>
-                Pay particular attention to the file sizes indicated with a <span class="glyphicon glyphicon-scale"></span>icon.
+                Pay particular attention to the file sizes indicated with a <span class="glyphicon glyphicon-scale"></span> icon.
                 These can be dramatically reduced by altering the quality setting with negligible visual impact,
                 especially for web use. The first few panels below use the same settings with the exception of the
                 quality setting. Also note "missing" files for the sizes given and compare their original size with the
