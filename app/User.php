@@ -42,6 +42,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Project::class);
     }
 
+    /**
+     * Get the Stripe supported currency used by the entity.
+     *
+     * @return string
+     */
+    public function preferredCurrency()
+    {
+        return 'gbp';
+    }
+
 
     /**
      * A user has project access or has a subscription plan.
