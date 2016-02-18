@@ -16,7 +16,7 @@
                 </a>
             </p>
             <p>
-                Pay particular attention to the file sizes indicated with a <i class="fa fa-balance-scale"></i> icon.
+                Pay particular attention to the file sizes indicated with a <span class="glyphicon glyphicon-scale"></span>icon.
                 These can be dramatically reduced by altering the quality setting with negligible visual impact,
                 especially for web use. The first few panels below use the same settings with the exception of the
                 quality setting. Also note "missing" files for the sizes given and compare their original size with the
@@ -37,7 +37,7 @@
                             <td>{{ $original['height'] }}px</td>
                         </tr>
                         <tr>
-                            <th><i class="fa fa-balance-scale"></i></th>
+                            <th><span class="glyphicon glyphicon-scale"></span></th>
                             <td class="clipping">{{ formatFileSize($original['filesize']) }}</td>
                         </tr>
                         <tr>
@@ -146,7 +146,7 @@
                                 <td>{{ $file->size[1] }}px</td>
                             </tr>
                             <tr>
-                                <th><i class="fa fa-balance-scale"></i></th>
+                                <th><span class="glyphicon glyphicon-scale"></span></th>
                                 <td class="clipping">{{ formatFileSize($file->getSize()) }}</td>
                             </tr>
                         </table>
