@@ -688,7 +688,7 @@ class ProjectController extends Controller
         $download = (!$project->save_resized_zips || $request->has('download'));
 
         $options = [
-            'quality'     => 100,
+            'quality'     => 90,
             'responsive'  => true,
             'noupscale'   => true,
             'greyscale'   => $greyscale,

@@ -29,7 +29,7 @@
                     we'll resize them using the following settings:</p>
                 <ul>
                     <li>Responsive (widths only are used)</li>
-                    <li>Quality: 100%</li>
+                    <li>Quality: 90%</li>
                     <li>No Upscaling</li>
                 </ul>
             </div>
