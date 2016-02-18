@@ -174,7 +174,10 @@ class TeamController extends Controller
         $user = User::find($request->input('userID'));
         if (!$request->user()->allTeamMembers()->has($user->email))
         {
-            abort(403);
+            return response()->json(['title'   => "Error",
+                                     'message' => "{$user->name} was not added to {$team->name} because they do not exist in any of your teams.",
+                                     'type'    => 'error',
+            ]);
         }
         $team->members()->attach($user->id);
 
@@ -194,10 +197,13 @@ class TeamController extends Controller
         $user = User::find($request->input('userID'));
         if (!$request->user()->allTeamMembers()->has($user->email))
         {
-            abort(403);
+            return response()->json(['title'   => "Error",
+                                     'message' => "{$user->name} was not removed from {$team->name} because they do not exist in any of your teams.",
+                                     'type'    => 'error',
+            ]);
         }
-        $team->members()->detach($user->id);
 
+        $team->members()->detach($user->id);
         return response()->json(['title'   => "Success",
                                  'message' => "{$user->name} removed from {$team->name}",
                                  'type'    => 'success',

@@ -37,7 +37,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Team Members</h3>
-                    <p>Drag users in and out of your team</p>
+                    <p>Drag users in and out of your team.</p>
+                    <p><small><strong>Note:</strong> If the user is dragged out of a team and does not exist in any other teams, you will need to re-invite the user to any new teams. It's a good idea to create a "Our Company" team to store everyone.</small></p>
+                    <p>
+                        <small><strong>Note:</strong> Removing a user from a team will not remove them from any specific projects.</small>
+                    </p>
                 </div>
                 <div class="col-md-6">
                     <ul id="in-team" class="team-member-list list-group">
