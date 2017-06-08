@@ -13,7 +13,7 @@
         $('#account-zone').dropzone({
             dictDefaultMessage: "Drop zips or images from your device here",
             paramName: "file",
-            maxFilesize: 10,
+            maxFilesize: 128,
             uploadMultiple: true,
             maxFiles: 25,
             parallelUploads: 25,
