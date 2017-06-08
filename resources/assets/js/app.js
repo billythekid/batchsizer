@@ -3,7 +3,7 @@ Dropzone.autoDiscover = false;
 $('#filezone').dropzone({
     dictDefaultMessage: "Drop images here, max 10 at a time.",
     paramName: "picture",
-    maxFilesize: 128,
+    maxFilesize: 10,
     uploadMultiple: true,
     maxFiles: 10,
     parallelUploads: 10,
