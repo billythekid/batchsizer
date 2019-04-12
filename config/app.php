@@ -161,7 +161,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Chumper\Zipper\ZipperServiceProvider::class,
         GeneaLabs\LaravelCaffeine\LaravelCaffeineServiceProvider::class,
-        Infinety\SweetAlert\AlertServiceProvider::class,
+        Infinety\Alerts\AlertServiceProvider::class,
         Laravel\Cashier\CashierServiceProvider::class,
         Mpociot\Teamwork\TeamworkServiceProvider::class,
 

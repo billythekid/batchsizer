@@ -7,7 +7,14 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900">
     <link rel="stylesheet" href="{{ url('css/app.css') }}">
     <link rel="stylesheet" href="{{ url('css/all.css') }}">
-
+    <script src="https://www.google.com/recaptcha/api.js?render={{ env('RECAPTCHA_KEY') }}"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ env('RECAPTCHA_KEY') }}', {action: '{{ request()->path() }}'}).then(function(token) {
+                document.getElementById('recaptcha-token').value = token;
+            });
+        });
+    </script>
 </head>
 <body>
 @include('_includes.nav')

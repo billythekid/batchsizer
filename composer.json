@@ -14,14 +14,15 @@
     "guzzlehttp/guzzle": "~5.3|~6.0",
     "intervention/image": "^2.3",
     "chumper/zipper": "0.6.x",
-    "genealabs/laravel-caffeine": "~0.3",
+    "genealabs/laravel-caffeine": "~0.3.0",
     "pusher/pusher-php-server": "~2.0",
     "FortAwesome/Font-Awesome": "^4.5",
-    "infinety/sweetalert": "dev-master",
+    "infinety/alerts": "*@dev",
     "laravel/cashier": "^6.0",
     "league/flysystem-aws-s3-v3": "^1.0",
     "dompdf/dompdf": "^0.6.2",
-    "mpociot/teamwork": "^2.0"
+    "mpociot/teamwork": "^2.0",
+    "ext-json": "*"
   },
   "require-dev": {
     "mockery/mockery": "0.9.*",
